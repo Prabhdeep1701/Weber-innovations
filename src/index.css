@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 30px rgba(37, 99, 235, 0.2);
+  }
+}
+
+body {
+  /* Set fallback background */
+  background-color: #F8FAFC; 
+  color: #0F172A; 
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* IMPORTANT: This must be transparent for the fixed video to show */
+#root {
+  background-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}

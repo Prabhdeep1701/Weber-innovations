@@ -113,7 +113,7 @@ const HeroFloatingCards = () => {
         
         {/* Card 1 */}
         <motion.div 
-          initial={{ y: 0 }}
+          initial={false}
           animate={{ y: [-5, 5, -5] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg bg-white/80 backdrop-blur-md border border-white/40"
@@ -135,7 +135,7 @@ const HeroFloatingCards = () => {
 
         {/* Card 2 */}
         <motion.div 
-          initial={{ y: 0 }}
+          initial={false}
           animate={{ y: [5, -5, 5] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
           className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:ml-8 bg-white/80 backdrop-blur-md border border-white/40"
@@ -157,7 +157,7 @@ const HeroFloatingCards = () => {
 
         {/* Card 3 */}
         <motion.div 
-          initial={{ y: 0 }}
+          initial={false}
           animate={{ y: [-5, 5, -5] }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:-ml-4 bg-white/80 backdrop-blur-md border border-white/40"

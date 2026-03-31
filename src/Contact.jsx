@@ -129,7 +129,7 @@ export default function Contact() {
             <div className="flex items-center gap-2 mb-6">
               {/* Replace the text/icon with your image */}
               <img 
-                src="./assets/logo.png"
+                src="/logo2.png"
                 alt="Weber Innovations" 
                 className="h-20 w-30 object-contain" /* Adjust h-10 to h-8 or h-12 to fit your logo size */
               />

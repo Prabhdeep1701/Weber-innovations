@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        serif: ['Newsreader', 'serif'],
+        sans: ['Poppins', 'Inter', 'serif'],
+        serif: ['Georgia', 'Newsreader', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {

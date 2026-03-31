@@ -3,7 +3,7 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { 
   ArrowRight,Zap, Globe, 
   Cpu, Plane, Hammer, HeartPulse, Shirt, Droplets, Shield, 
-  Target, TrendingUp, Menu, X, Layers, Leaf // Add Rocket and Users
+  Target, TrendingUp, Menu, X, Layers, Leaf, Mail, Phone, MapPin, Linkedin, Instagram
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -121,7 +121,7 @@ export default function Insight() {
         <div className="flex items-center gap-2">
           {/* Replace the text/icon with your image */}
           <img 
-            src="/logo2.png"
+            src="/icon.png"
             alt="Weber Innovations" 
             className="h-12 w-auto object-contain"
           />
@@ -135,29 +135,29 @@ export default function Insight() {
         <div className="hidden md:flex gap-12 text-sm font-medium text-slate-600">
           {/* Link to Home Page */}
           <Link to="/" className="hover:text-black transition-colors">
-            HOME
+            Home
           </Link>
 
           {/* Scroll to About Section on Home Page */}
           <a href="/about" className="hover:text-black transition-colors">
-            ABOUT
+            About
           </a>
 
           {/* Link to New Sectors Page */}
           <Link to="/sectors" className="hover:text-black transition-colors">
-            SECTORS
+            Sectors
           </Link>
 
           {/* Scroll to Insights/Integration Section */}
           <a href="/insight" className="hover:text-black transition-colors">
-            INSIGHTS
+            Insights
           </a>
         </div>
         {/* Right Side Actions */}
                 <div className="flex items-center gap-4">
                   {/* Contact Button (Hidden on very small screens if needed, or keep) */}
                   <ShinyButton onClick={() => navigate('/contact')} className="hidden sm:flex items-center rounded-full bg-slate-900 text-white text-sm font-bold transition-colors shadow-md">
-                    CONTACT <ArrowRight className="w-3 h-3" />
+                    Contact <ArrowRight className="w-3 h-3" />
                   </ShinyButton>
               
                   {/* Mobile Menu Toggle (Visible on Mobile) */}
@@ -184,7 +184,7 @@ export default function Insight() {
             <div className="flex items-center gap-2 mb-6">
               {/* Replace the text/icon with your image */}
               <img 
-                src="/logo2.png"
+                src="/icon.png"
                 alt="Weber Innovations" 
                 className="h-20 w-30 object-contain" /* Adjust h-10 to h-8 or h-12 to fit your logo size */
               />
@@ -195,7 +195,7 @@ export default function Insight() {
             </p>
           </div>
           <div>
-            <h4 className=" text-slate-900 mb-4">PRODUCTS</h4>
+            <h4 className=" text-slate-900 mb-4">Products</h4>
             <ul className="space-y-3 text-slate-500 text-sm">
               <li className="hover:text-black cursor-pointer">Graphene Nanoplatelets</li>
               <li className="hover:text-black cursor-pointer">Reduced Graphene Oxide</li>
@@ -204,12 +204,29 @@ export default function Insight() {
             </ul>
           </div>
           <div>
-            <h4 className=" text-slate-900 mb-4">CONTACTS</h4>
+            <h4 className=" text-slate-900 mb-4 font-bold">Contacts</h4>
             <ul className="space-y-3 text-slate-500 text-sm">
-              <li className="flex items-center gap-2"> weberinnovations.official@gmail.com</li>
-              <li>+91 9557281101</li>
-              <li>Greater Noida, UP, India</li>
+              <li className="flex items-center gap-2 hover:text-black transition-colors">
+                <Mail className="w-4 h-4" />
+                <a href="mailto:weberinnovations.official@gmail.com">weberinnovations.official@gmail.com</a>
+              </li>
+              <li className="flex items-center gap-2 hover:text-black transition-colors">
+                <Phone className="w-4 h-4" />
+                <a href="tel:+919557281101">+91 9557281101</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                Greater Noida, UP, India
+              </li>
             </ul>
+            <div className="flex gap-3 mt-6">
+              <a href="https://www.linkedin.com/company/weber-innovations/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm">
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a href="https://www.instagram.com/weberinnovations_official/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm">
+                <Instagram className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
         <div className="max-w-7xl mx-auto border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
@@ -252,11 +269,11 @@ const MobileMenu = ({ isOpen, onClose }) => {
             <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-6 pl-1">Navigation</p>
             
             {[
-              { id: "01", label: "HOME", href: "/" },
-              { id: "02", label: "ABOUT", href: "/about" },
-              { id: "03", label: "SECTORS", href: "/sectors" },
-              { id: "04", label: "INSIGHTS", href: "/insight" },
-              { id: "05", label: "CONTACTS", href: "/contact" }
+              { id: "01", label: "Home", href: "/" },
+              { id: "02", label: "About", href: "/about" },
+              { id: "03", label: "Sectors", href: "/sectors" },
+              { id: "04", label: "Insights", href: "/insight" },
+              { id: "05", label: "Contact", href: "/contact" }
             ].map((link) => (
               <a 
                 key={link.id}
@@ -335,9 +352,9 @@ const ResearchTrends = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-4xl md:text-6xl uppercase text-white tracking-tighter"
+            className="text-4xl md:text-6xl text-white tracking-tighter"
           >
-            Key Research <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500 italic">TRENDS</span>
+            Key Research <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500 italic">Trends</span>
           </motion.h2>
         </div>
         
@@ -424,8 +441,8 @@ const SectorsAndStrategy = () => {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-md"
           >
           </motion.div>
-          <h2 className="text-5xl md:text-7xl text-black mb-6 uppercase">
-            Graphene insights AND <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500 italic">research trends</span>
+          <h2 className="text-5xl md:text-7xl text-black mb-6">
+            Graphene Insights and <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500 italic">Research Trends</span>
           </h2>
           <p className="text-zinc-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
             Stay updated with the latest developments and breakthroughs shaping the future of advanced materials.

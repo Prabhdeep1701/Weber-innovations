@@ -16,6 +16,18 @@ body {
   overflow-x: hidden;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Outfit', serif;
+}
+
+p {
+  font-family: 'Georgia', serif;
+}
 /* IMPORTANT: This must be transparent for the fixed video to show */
 #root {
   background-color: transparent;

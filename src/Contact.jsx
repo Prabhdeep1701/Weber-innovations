@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { 
-  ArrowRight,MessageSquare, Mail, Clock, Route, MessageCircle, Menu, X
+  ArrowRight,MessageSquare, Mail, Clock, Route, MessageCircle, Menu, X, Phone, MapPin, Linkedin, Instagram
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -69,7 +69,7 @@ export default function Contact() {
         <div className="flex items-center gap-2">
           {/* Replace the text/icon with your image */}
           <img 
-            src="/logo2.png"
+            src="/icon.png"
             alt="Weber Innovations" 
             className="h-12 w-auto object-contain"
           />
@@ -83,29 +83,29 @@ export default function Contact() {
         <div className="hidden md:flex gap-12 text-sm font-medium text-slate-600">
           {/* Link to Home Page */}
           <Link to="/" className="hover:text-black transition-colors">
-            HOME
+            Home
           </Link>
 
           {/* Scroll to About Section on Home Page */}
           <a href="/about" className="hover:text-black transition-colors">
-            ABOUT
+            About
           </a>
 
           {/* Link to New Sectors Page */}
           <Link to="/sectors" className="hover:text-black transition-colors">
-            SECTORS
+            Sectors
           </Link>
 
           {/* Scroll to Insights/Integration Section */}
           <a href="/insight" className="hover:text-black transition-colors">
-            INSIGHTS
+            Insights
           </a>
         </div>
         {/* Right Side Actions */}
                 <div className="flex items-center gap-4">
                   {/* Contact Button (Hidden on very small screens if needed, or keep) */}
                   <ShinyButton onClick={() => navigate('/contact')} className="hidden sm:flex items-center rounded-full bg-slate-900 text-white text-sm font-bold transition-colors shadow-md">
-                    CONTACT <ArrowRight className="w-3 h-3" />
+                    Contact <ArrowRight className="w-3 h-3" />
                   </ShinyButton>
               
                   {/* Mobile Menu Toggle (Visible on Mobile) */}
@@ -129,7 +129,7 @@ export default function Contact() {
             <div className="flex items-center gap-2 mb-6">
               {/* Replace the text/icon with your image */}
               <img 
-                src="/logo2.png"
+                src="/icon.png"
                 alt="Weber Innovations" 
                 className="h-20 w-30 object-contain" /* Adjust h-10 to h-8 or h-12 to fit your logo size */
               />
@@ -140,7 +140,7 @@ export default function Contact() {
             </p>
           </div>
           <div>
-            <h4 className=" text-slate-900 mb-4">PRODUCTS</h4>
+            <h4 className=" text-slate-900 mb-4">Products</h4>
             <ul className="space-y-3 text-slate-500 text-sm">
               <li className="hover:text-black cursor-pointer">Graphene Nanoplatelets</li>
               <li className="hover:text-black cursor-pointer">Reduced Graphene Oxide</li>
@@ -149,12 +149,29 @@ export default function Contact() {
             </ul>
           </div>
           <div>
-            <h4 className=" text-slate-900 mb-4">CONTACTS</h4>
+            <h4 className=" text-slate-900 mb-4 font-bold">Contacts</h4>
             <ul className="space-y-3 text-slate-500 text-sm">
-              <li className="flex items-center gap-2"> weberinnovations.official@gmail.com</li>
-              <li>+91 9557281101</li>
-              <li>Greater Noida, UP, India</li>
+              <li className="flex items-center gap-2 hover:text-black transition-colors">
+                <Mail className="w-4 h-4" />
+                <a href="mailto:weberinnovations.official@gmail.com">weberinnovations.official@gmail.com</a>
+              </li>
+              <li className="flex items-center gap-2 hover:text-black transition-colors">
+                <Phone className="w-4 h-4" />
+                <a href="tel:+919557281101">+91 9557281101</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                Greater Noida, UP, India
+              </li>
             </ul>
+            <div className="flex gap-3 mt-6">
+              <a href="https://www.linkedin.com/company/weber-innovations/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm">
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a href="https://www.instagram.com/weberinnovations_official/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm">
+                <Instagram className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
         <div className="max-w-7xl mx-auto border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
@@ -197,11 +214,11 @@ const MobileMenu = ({ isOpen, onClose }) => {
             <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-6 pl-1">Navigation</p>
             
             {[
-              { id: "01", label: "HOME", href: "/" },
-              { id: "02", label: "ABOUT", href: "/about" },
-              { id: "03", label: "SECTORS", href: "/sectors" },
-              { id: "04", label: "INSIGHTS", href: "/insight" },
-              { id: "05", label: "CONTACTS", href: "/contact" }
+              { id: "01", label: "Home", href: "/" },
+              { id: "02", label: "About", href: "/about" },
+              { id: "03", label: "Sectors", href: "/sectors" },
+              { id: "04", label: "Insights", href: "/insight" },
+              { id: "05", label: "Contact", href: "/contact" }
             ].map((link) => (
               <a 
                 key={link.id}
@@ -237,7 +254,7 @@ function ContactSupportSection() {
         >
         </motion.div>
         <h2 className="text-4xl sm:text-5xl md:text-7xl text-black mb-6 leading-tight">
-          CONTACT <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500 italic">US</span>
+          Contact <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500 italic">Us</span>
         </h2>
         <p className="text-zinc-400 max-w-2xl mx-auto text-base sm:text-lg font-light leading-relaxed px-2">
           Weber Innovations is transforming eight key industries with graphene-based solutions that enhance performance, efficiency, and sustainability.
@@ -261,7 +278,7 @@ function ContactSupportSection() {
             
             {/* Copy + Highlights (Order 1 on Mobile, Order 2 on Desktop) */}
             <div className="lg:col-span-7 flex flex-col justify-center h-full order-1 lg:order-2 mb-8 lg:mb-0">
-              <h2 className="text-white tracking-tight text-4xl sm:text-5xl md:text-6xl">LET'S <span className="text-white italic">TALK.</span></h2>
+              <h2 className="text-white tracking-tight text-4xl sm:text-5xl md:text-6xl">Let's <span className="text-white italic">Talk.</span></h2>
               <p className="text-base sm:text-lg max-w-2xl text-neutral-300 mt-4 font-light leading-relaxed">
                 Tell us about your setup—support, bulk orders, or partnerships. We reply within one business day.
               </p>
@@ -304,7 +321,7 @@ function ContactSupportSection() {
                     className="ml-auto sm:ml-2 inline-flex items-center gap-2 rounded-xl bg-neutral-900 text-white px-4 py-2.5 text-xs font-medium hover:bg-neutral-800 transition-colors shrink-0"
                   >
                     Ask directly
-                    <MessageCircle className="h-3.5 w-3.5" />
+                    <Mail className="h-3.5 w-3.5" />
                   </a>
                 </div>
               </div>
@@ -317,7 +334,7 @@ function ContactSupportSection() {
                   <div>
                     <p className="text-[11px] text-neutral-500 uppercase tracking-wider font-semibold">Weber Support</p>
                     <h3 className="mt-1 text-2xl sm:text-3xl text-neutral-900">
-                      HAVE A <span className="text-black italic">QUESTION?</span>
+                      Have a <span className="text-black italic">Question?</span>
                     </h3>
                   </div>
                   <div className="h-9 w-9 rounded-2xl bg-neutral-900 text-white flex items-center justify-center shrink-0 ml-4">

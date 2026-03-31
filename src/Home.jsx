@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { 
+import {
   ArrowRight, ShieldCheck, Zap, Globe, Activity,
-  Mail, BarChart3, // <--- Add these 3 new icons
+  Mail, BarChart3, Phone, MapPin,
   Rocket, Users, Menu, X, Shield, Maximize2, Leaf,
-  Calendar, Linkedin, Instagram, Twitter, Dribbble // Add Rocket and Users
+  Calendar, Linkedin, Instagram, Twitter, Dribbble
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const VideoBackground = () => {
         className="absolute w-full h-full object-cover"
         // Using a reliable CDN placeholder. 
         // IMPORTANT: Replace this with your local file path if needed (e.g., /assets/video.mp4)
-        src="./assets/black.mp4" 
+        src="./assets/black.mp4"
       />
       {/* Light Overlay to keep text readable */}
       <div className="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
@@ -30,7 +30,7 @@ const VideoBackground = () => {
 
 // --- UI Components ---
 
-const ShinyButton = ({ children, className = "", ...props}) => {
+const ShinyButton = ({ children, className = "", ...props }) => {
   return (
     <motion.button
       whileHover={{ scale: 1.02 }}
@@ -71,14 +71,14 @@ const SpotlightCard = ({ children, className = "", delay = 0 }) => {
       onMouseLeave={handleMouseLeave}
       className={`relative rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-xl shadow-lg overflow-hidden ${className}`}
     >
-      <div 
+      <div
         className="pointer-events-none absolute inset-0 transition-opacity duration-500"
         style={{
           opacity,
           background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(37, 99, 235, 0.1), transparent 40%)`
         }}
       />
-      <div 
+      <div
         className="pointer-events-none absolute inset-0 rounded-2xl border border-brand-blue/30 transition-opacity duration-500"
         style={{
           opacity,
@@ -101,91 +101,91 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Add this at top of component
 
   // --- NEW HERO VISUAL (Floating Cards) ---
-const HeroFloatingCards = () => {
-  return (
-    <div className="flex flex-col items-center justify-center h-full mt-8 lg:mt-0 relative perspective-1000 w-full">
-      
-      {/* Background Glow Blob */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] bg-black opacity-30 blur-[100px] rounded-full pointer-events-none"></div>
-      
-      {/* Container with max-width to prevent overflow */}
-      <div className="relative space-y-4 sm:space-y-5 w-full max-w-[320px] sm:max-w-sm">
-        
-        {/* Card 1 */}
-        <motion.div 
-          initial={false}
-          animate={{ y: [-5, 5, -5] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-          className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg bg-white/80 backdrop-blur-md border border-white/40"
-        >
-          <div className="w-10 h-10 rounded-full flex items-center justify-center border shrink-0 bg-blue-50 text-brand-blue border-blue-100">
-            <Rocket width="20" strokeWidth="1.5" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex justify-between items-center mb-0.5">
-              <p className="text-xs font-semibold text-slate-900">SUPPLY CHAIN</p>
-              <span className="text-[10px] text-slate-400">Secure</span>
-            </div>
-            <p className="text-xs text-slate-500 truncate">Domestic + Scalable</p>
-          </div>
-          <span className="text-[10px] px-2 py-0.5 rounded border font-medium bg-slate-100 text-slate-600 border-slate-200">
-            Verified
-          </span>
-        </motion.div>
+  const HeroFloatingCards = () => {
+    return (
+      <div className="flex flex-col items-center justify-center h-full mt-8 lg:mt-0 relative perspective-1000 w-full">
 
-        {/* Card 2 */}
-        <motion.div 
-          initial={false}
-          animate={{ y: [5, -5, 5] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-          className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:ml-8 bg-white/80 backdrop-blur-md border border-white/40"
-        >
-          <div className="flex shrink-0 bg-brand-blue w-10 h-10 border rounded-full items-center justify-center text-white border-blue-600">
-            <Users width="20" strokeWidth="1.5" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex justify-between items-center mb-0.5">
-              <p className="text-xs font-semibold text-slate-900">R&D PARTNERS</p>
-              <span className="text-[10px] text-slate-400">Active</span>
-            </div>
-            <p className="text-xs text-slate-500 truncate">Strategic Defence Ties</p>
-          </div>
-          <span className="bg-blue-100 text-[10px] px-2 py-0.5 rounded border border-blue-200 font-medium text-blue-800">
-            3 Active
-          </span>
-        </motion.div>
+        {/* Background Glow Blob */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] bg-black opacity-30 blur-[100px] rounded-full pointer-events-none"></div>
 
-        {/* Card 3 */}
-        <motion.div 
-          initial={false}
-          animate={{ y: [-5, 5, -5] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-          className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:-ml-4 bg-white/80 backdrop-blur-md border border-white/40"
-        >
-          <div className="w-10 h-10 rounded-full text-white flex items-center justify-center border shrink-0 bg-slate-900 border-slate-800">
-            <BarChart3 width="20" strokeWidth="1.5" />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex justify-between items-center mb-0.5">
-              <p className="text-xs font-semibold text-slate-900">COST EFFICIENCY</p>
-              <span className="text-[10px] text-slate-400">Audit</span>
-            </div>
-            <p className="text-xs text-slate-500 truncate">&lt; ₹7,000/kg Pricing</p>
-          </div>
-          <span className="text-[10px] px-2 py-0.5 rounded border font-medium bg-slate-900 text-white border-slate-700">
-            Top 1%
-          </span>
-        </motion.div>
+        {/* Container with max-width to prevent overflow */}
+        <div className="relative space-y-4 sm:space-y-5 w-full max-w-[320px] sm:max-w-sm">
 
+          {/* Card 1 */}
+          <motion.div
+            initial={false}
+            animate={{ y: [-5, 5, -5] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg bg-white/80 backdrop-blur-md border border-white/40"
+          >
+            <div className="w-10 h-10 rounded-full flex items-center justify-center border shrink-0 bg-blue-50 text-brand-blue border-blue-100">
+              <Rocket width="20" strokeWidth="1.5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-center mb-0.5">
+                <p className="text-xs font-semibold text-slate-900">Supply Chain</p>
+                <span className="text-[10px] text-slate-400">Secure</span>
+              </div>
+              <p className="text-xs text-slate-500 truncate">Domestic + Scalable</p>
+            </div>
+            <span className="text-[10px] px-2 py-0.5 rounded border font-medium bg-slate-100 text-slate-600 border-slate-200">
+              Verified
+            </span>
+          </motion.div>
+
+          {/* Card 2 */}
+          <motion.div
+            initial={false}
+            animate={{ y: [5, -5, 5] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+            className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:ml-8 bg-white/80 backdrop-blur-md border border-white/40"
+          >
+            <div className="flex shrink-0 bg-brand-blue w-10 h-10 border rounded-full items-center justify-center text-white border-blue-600">
+              <Users width="20" strokeWidth="1.5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-center mb-0.5">
+                <p className="text-xs font-semibold text-slate-900">R&D Partners</p>
+                <span className="text-[10px] text-slate-400">Active</span>
+              </div>
+              <p className="text-xs text-slate-500 truncate">Strategic Defence Ties</p>
+            </div>
+            <span className="bg-blue-100 text-[10px] px-2 py-0.5 rounded border border-blue-200 font-medium text-blue-800">
+              3 Active
+            </span>
+          </motion.div>
+
+          {/* Card 3 */}
+          <motion.div
+            initial={false}
+            animate={{ y: [-5, 5, -5] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:-ml-4 bg-white/80 backdrop-blur-md border border-white/40"
+          >
+            <div className="w-10 h-10 rounded-full text-white flex items-center justify-center border shrink-0 bg-slate-900 border-slate-800">
+              <BarChart3 width="20" strokeWidth="1.5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex justify-between items-center mb-0.5">
+                <p className="text-xs font-semibold text-slate-900">Cost Efficiency</p>
+                <span className="text-[10px] text-slate-400">Audit</span>
+              </div>
+              <p className="text-xs text-slate-500 truncate">&lt; ₹7,000/kg Pricing</p>
+            </div>
+            <span className="text-[10px] px-2 py-0.5 rounded border font-medium bg-slate-900 text-white border-slate-700">
+              Top 1%
+            </span>
+          </motion.div>
+
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
   return (
     // IMPORTANT: bg-transparent allows the fixed video to show through
     <div className="min-h-screen overflow-x-hidden font-sans selection:bg-brand-purple selection:text-white text-slate-900 bg-transparent">
-      
+
       {/* 1. FIXED VIDEO BACKGROUND LAYER */}
       <VideoBackground />
 
@@ -193,13 +193,13 @@ const HeroFloatingCards = () => {
 
       {/* Navigation */}
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-50 flex items-center justify-between p-3 pl-6 pr-4 bg-white/70 backdrop-blur-xl border border-white/40 rounded-full shadow-lg shadow-slate-200/50">
-        
+
         {/* --- LOGO AREA UPDATED --- */}
         <div className="flex items-center gap-2">
           {/* Replace the text/icon with your image */}
-          <img 
-            src="/logo2.png"
-            alt="Weber Innovations" 
+          <img
+            src="/icon.png"
+            alt="Weber Innovations"
             className="h-12 w-auto object-contain"
           />
         </div>
@@ -212,40 +212,40 @@ const HeroFloatingCards = () => {
         <div className="hidden md:flex gap-12 text-sm font-medium text-slate-600">
           {/* Link to Home Page */}
           <Link to="/" className="hover:text-black transition-colors">
-            HOME
+            Home
           </Link>
 
           {/* Scroll to About Section on Home Page */}
           <a href="/about" className="hover:text-black transition-colors">
-            ABOUT
+            About
           </a>
 
           {/* Link to New Sectors Page */}
           <Link to="/sectors" className="hover:text-black transition-colors">
-            SECTORS
+            Sectors
           </Link>
 
           {/* Scroll to Insights/Integration Section */}
           <a href="/insight" className="hover:text-black transition-colors">
-            INSIGHTS
+            Insights
           </a>
         </div>
-        
+
         {/* Right Side Actions */}
-                <div className="flex items-center gap-4">
-                  {/* Contact Button (Hidden on very small screens if needed, or keep) */}
-                  <ShinyButton onClick={() => navigate('/contact')} className="hidden sm:flex items-center rounded-full bg-slate-900 text-white text-sm font-bold transition-colors shadow-md">
-                    CONTACT <ArrowRight className="w-3 h-3" />
-                  </ShinyButton>
-              
-                  {/* Mobile Menu Toggle (Visible on Mobile) */}
-                  <button 
-                    onClick={() => setIsMenuOpen(true)}
-                    className="md:hidden group flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-black hover:text-white transition-all duration-300"
-                  >
-                    <Menu className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
-                  </button>
-                </div>
+        <div className="flex items-center gap-4">
+          {/* Contact Button (Hidden on very small screens if needed, or keep) */}
+          <ShinyButton onClick={() => navigate('/contact')} className="hidden sm:flex items-center rounded-full bg-slate-900 text-white text-sm font-bold transition-colors shadow-md">
+            Contact <ArrowRight className="w-3 h-3" />
+          </ShinyButton>
+
+          {/* Mobile Menu Toggle (Visible on Mobile) */}
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="md:hidden group flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-black hover:text-white transition-all duration-300"
+          >
+            <Menu className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
+          </button>
+        </div>
       </nav>
       {/* Render the Mobile Menu Overlay */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
@@ -253,56 +253,56 @@ const HeroFloatingCards = () => {
       {/* --- SECTION 1: HERO (TRANSPARENT BG) --- */}
       {/* --- SECTION 1: HERO (TRANSPARENT BG) --- */}
       <main className="relative pt-32 pb-20 lg:pt-35 lg:pb-30 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center min-h-screen">
-        
+
         {/* TEXT COLUMN: Order 1 on Mobile & Desktop (Top/Left) */}
         <div className="flex flex-col items-start order-1 relative z-10 w-full">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/50 border border-slate-200 mb-8 backdrop-blur-md"
           >
-             <span className="relative flex h-2 w-2">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-blue opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-blue"></span>
             </span>
-            <span className="text-xs font-bold text-brand-blue tracking-widest uppercase">Indigenous Manufacturing Hub</span>
+            <span className="text-xs font-bold text-brand-blue tracking-widest">Indigenous Manufacturing Hub</span>
           </motion.div>
-          
-          <motion.h1 
+
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-7xl font-medium leading-[1.1] mb-6 text-slate-900"
+            className="text-4xl sm:text-5xl lg:text-[4rem] font-medium leading-[1.1] mb-6 text-slate-900"
           >
-            REINVENTING INDUSTRIAL<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">GRAPHENE PRODUCTION.</span>
+            Reinventing Industrial<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Graphene Production.</span>
           </motion.h1>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
             className="text-lg sm:text-xl text-slate-600 font-light leading-relaxed max-w-lg mb-10"
           >
-            We synthesize industrial-grade graphene with atomic precision. 
+            We synthesize industrial-grade graphene with atomic precision.
             Bridging the gap between lab-scale potential and industrial scalability.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="flex flex-wrap gap-4"
           >
-            <ShinyButton>LEARN MORE</ShinyButton>
+            <ShinyButton>Learn More</ShinyButton>
             <button className="px-8 py-4 rounded-full border border-slate-200 hover:bg-white hover:shadow-lg transition-all flex items-center gap-2 text-slate-700 font-medium bg-white/40 backdrop-blur-md">
-              OUR VISION <ArrowRight className="w-4 h-4" />
+              Our Vision <ArrowRight className="w-4 h-4" />
             </button>
           </motion.div>
         </div>
 
         {/* CARDS COLUMN: Order 2 on Mobile (Bottom), Order 2 on Desktop (Right) */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1 }}
@@ -316,11 +316,11 @@ const HeroFloatingCards = () => {
       <div className="w-full border-y border-slate-200 bg-white/70 backdrop-blur-md overflow-hidden py-10 relative z-10">
         <div className="flex animate-marquee gap-32 min-w-max">
           {[...Array(4)].map((_, i) => (
-             <React.Fragment key={i}>
-                <span className="text-lg font-bold font-mono text-slate-400 flex items-center gap-2"><ShieldCheck className="w-5 h-5"/> DEFENCE R&D</span>
-                <span className="text-lg font-bold font-mono text-slate-400 flex items-center gap-2"><Zap className="w-5 h-5"/> ENERGY STORAGE</span>
-                <span className="text-lg font-bold font-mono text-slate-400 flex items-center gap-2"><Globe className="w-5 h-5"/>AUTOMOBILE AEROSPACE</span>
-             </React.Fragment>
+            <React.Fragment key={i}>
+              <span className="text-lg font-bold font-mono text-slate-400 flex items-center gap-2"><ShieldCheck className="w-5 h-5" /> Defence R&D</span>
+              <span className="text-lg font-bold font-mono text-slate-400 flex items-center gap-2"><Zap className="w-5 h-5" /> Energy Storage</span>
+              <span className="text-lg font-bold font-mono text-slate-400 flex items-center gap-2"><Globe className="w-5 h-5" />Automobile Aerospace</span>
+            </React.Fragment>
           ))}
         </div>
       </div>
@@ -331,31 +331,31 @@ const HeroFloatingCards = () => {
       <section className="py-32 px-6 relative z-10  bg-white border-t border-slate-200">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div>
-            <h2 className="text-5xl mb-6 text-slate-900">THE GRAPHENE <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">PARADOX</span></h2>
+            <h2 className="text-5xl mb-6 text-slate-900">The Graphene <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Paradox</span></h2>
             <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
               <p>
-                Graphene is the strongest, most conductive material ever discovered. 
+                Graphene is the strongest, most conductive material ever discovered.
                 Yet, 94% of global demand relies on inconsistent, high-cost imports.
               </p>
               <div className="p-6 rounded-2xl bg-slate-100 border border-white/50">
-                  <h4 className="text-black font-bold text-sm uppercase tracking-wide mb-3">Current Market Failures</h4>
-                  <ul className="space-y-3">
-                    <li className="flex items-center gap-3 font-medium text-slate-700">
-                      <div className="w-6 h-6 rounded-full bg-slate-200 text-black flex items-center justify-center text-xs">✕</div>
-                      Prohibitive Cost (&gt; ₹80,000/kg)
-                    </li>
-                    <li className="flex items-center gap-3 font-medium text-slate-700">
-                      <div className="w-6 h-6 rounded-full bg-slate-200 text-black flex items-center justify-center text-xs">✕</div>
-                      Batch Inconsistency & Low Purity
-                    </li>
-                  </ul>
+                <h4 className="text-black font-bold text-sm tracking-wide mb-3">Current Market Failures</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3 font-medium text-slate-700">
+                    <div className="w-6 h-6 rounded-full bg-slate-200 text-black flex items-center justify-center text-xs">✕</div>
+                    Prohibitive Cost (&gt; ₹80,000/kg)
+                  </li>
+                  <li className="flex items-center gap-3 font-medium text-slate-700">
+                    <div className="w-6 h-6 rounded-full bg-slate-200 text-black flex items-center justify-center text-xs">✕</div>
+                    Batch Inconsistency & Low Purity
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
           <div className="relative">
             <SpotlightCard className="p-8 h-full bg-white/80">
               <div className="flex items-center justify-between mb-8 border-b border-slate-200 pb-4">
-                <span className="font-mono text-xs uppercase text-slate-400">Market Analysis</span>
+                <span className="font-mono text-xs text-slate-400">Market Analysis</span>
                 <Activity className="text-brand-purple" />
               </div>
               <div className="space-y-8">
@@ -375,14 +375,14 @@ const HeroFloatingCards = () => {
                   </div>
                   <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
                     <div className="h-full w-[8%] bg-brand-blue relative">
-                        <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/50 animate-pulse"></div>
+                      <div className="absolute right-0 top-0 bottom-0 w-1 bg-white/50 animate-pulse"></div>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="mt-8 pt-6 border-t border-slate-200 flex justify-between items-center text-xs text-slate-400 font-mono">
-                  <span>DATA SOURCE: 2024 MARKET REPORT</span>
-                  <span>CONFIDENCE: 99.8%</span>
+                <span>DATA SOURCE: 2024 MARKET REPORT</span>
+                <span>CONFIDENCE: 99.8%</span>
               </div>
             </SpotlightCard>
           </div>
@@ -401,19 +401,19 @@ const HeroFloatingCards = () => {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-6">
               {/* Replace the text/icon with your image */}
-              <img 
-                src="/logo2.png"
-                alt="Weber Innovations" 
+              <img
+                src="/icon.png"
+                alt="Weber Innovations"
                 className="h-20 w-30 object-contain" /* Adjust h-10 to h-8 or h-12 to fit your logo size */
               />
             </div>
             <p className="text-slate-500 max-w-sm leading-relaxed">
-              Pioneering the synthesis of advanced 2D materials. 
+              Pioneering the synthesis of advanced 2D materials.
               Proudly engineered and manufactured in India.
             </p>
           </div>
           <div>
-            <h4 className=" text-slate-900 mb-4">PRODUCTS</h4>
+            <h4 className=" text-slate-900 mb-4">Products</h4>
             <ul className="space-y-3 text-slate-500 text-sm">
               <li className="hover:text-black cursor-pointer">Graphene Nanoplatelets</li>
               <li className="hover:text-black cursor-pointer">Reduced Graphene Oxide</li>
@@ -422,21 +422,38 @@ const HeroFloatingCards = () => {
             </ul>
           </div>
           <div>
-            <h4 className=" text-slate-900 mb-4">CONTACTS</h4>
+            <h4 className=" text-slate-900 mb-4 font-bold">Contacts</h4>
             <ul className="space-y-3 text-slate-500 text-sm">
-              <li className="flex items-center gap-2"> weberinnovations.official@gmail.com</li>
-              <li>+91 9557281101</li>
-              <li>Greater Noida, UP, India</li>
+              <li className="flex items-center gap-2 hover:text-black transition-colors">
+                <Mail className="w-4 h-4" />
+                <a href="mailto:weberinnovations.official@gmail.com">weberinnovations.official@gmail.com</a>
+              </li>
+              <li className="flex items-center gap-2 hover:text-black transition-colors">
+                <Phone className="w-4 h-4" />
+                <a href="tel:+919557281101">+91 9557281101</a>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                Greater Noida, UP, India
+              </li>
             </ul>
+            <div className="flex gap-3 mt-6">
+              <a href="https://www.linkedin.com/company/weber-innovations/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm">
+                <Linkedin className="w-4 h-4" />
+              </a>
+              <a href="https://www.instagram.com/weberinnovations_official/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm">
+                <Instagram className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
         <div className="max-w-7xl mx-auto border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
-           <p>© 2024 Weber Innovations. All rights reserved.</p>
-           <div className="flex gap-6 mt-4 md:mt-0">
-             <span>ISO 9001:2015</span>
-             <span>Privacy Policy</span>
-             <span>Terms of Service</span>
-           </div>
+          <p>© 2024 Weber Innovations. All rights reserved.</p>
+          <div className="flex gap-6 mt-4 md:mt-0">
+            <span>ISO 9001:2015</span>
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+          </div>
         </div>
       </footer>
     </div>
@@ -449,7 +466,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -457,7 +474,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
     >
       {/* Header with Close Button */}
       <div className="flex justify-end p-6 mt-2 mr-2">
-        <button 
+        <button
           onClick={onClose}
           className="group flex items-center justify-center w-10 h-10 rounded-md border border-white/10 bg-white/5 text-white hover:bg-brand-blue hover:border-brand-blue hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all duration-300"
         >
@@ -470,17 +487,17 @@ const MobileMenu = ({ isOpen, onClose }) => {
         <nav className="grid gap-8">
           <div className="space-y-2">
             <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-6 pl-1">Navigation</p>
-            
+
             {[
-              { id: "01", label: "HOME", href: "/" },
-              { id: "02", label: "ABOUT", href: "/about" },
-              { id: "03", label: "SECTORS", href: "/sectors" },
-              { id: "04", label: "INSIGHTS", href: "/insight" },
-              { id: "05", label: "CONTACTS", href: "/contact" }
+              { id: "01", label: "Home", href: "/" },
+              { id: "02", label: "About", href: "/about" },
+              { id: "03", label: "Sectors", href: "/sectors" },
+              { id: "04", label: "Insights", href: "/insight" },
+              { id: "05", label: "Contact", href: "/contact" }
             ].map((link) => (
-              <a 
+              <a
                 key={link.id}
-                href={link.href} 
+                href={link.href}
                 onClick={onClose}
                 className="group flex items-baseline gap-4 py-3 border-b border-white/5 hover:border-brand-blue/50 transition-colors"
               >
@@ -505,7 +522,7 @@ function AboutUs() {
       <div className="max-w-7xl w-full mx-auto px-6"> {/* Added px-6 for mobile padding */}
         <div className="text-center md:text-left mb-12">
           <h2 className="text-4xl sm:text-5xl md:text-6xl text-slate-200 mb-4 tracking-tight max-w-none">
-            ABOUT <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">US</span>
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Us</span>
           </h2>
           <p className="text-sm sm:text-base animate-[fadeSlideIn_0.8s_ease-out_0.2s_both] text-neutral-300 font-geist max-w-none">
             Explore millions of high-quality photos curated for creators,
@@ -516,7 +533,7 @@ function AboutUs() {
         {/* Expanding Cards Container */}
         {/* On Mobile: Stacked with gap. On Desktop: Fixed height row for expansion effect */}
         <div className="flex flex-col md:flex-row gap-6 md:gap-4 h-auto md:h-[500px]" id="expanding-cards">
-          
+
           {/* Card 1: Research */}
           <article
             className="card group w-full md:flex-1 relative overflow-hidden rounded-2xl transition-all duration-500 ease-out bg-neutral-900/60 ring-neutral-800 ring-1 hover:md:flex-[1.5] min-h-[300px] md:min-h-0"
@@ -527,10 +544,10 @@ function AboutUs() {
               className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-            
+
             <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500 opacity-100">
               <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
-                <h3 className="text-white text-2xl mb-2 font-geist">RESEARCH</h3>
+                <h3 className="text-white text-2xl mb-2 font-geist">Research</h3>
                 <p className="text-neutral-300 text-sm font-geist">Pioneering graphene research for real-world applications</p>
               </div>
             </div>
@@ -546,10 +563,10 @@ function AboutUs() {
               className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-            
+
             <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500 opacity-100">
               <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
-                <h3 className="text-white text-2xl mb-2 font-geist">COMMERCIALIZATION</h3>
+                <h3 className="text-white text-2xl mb-2 font-geist">Commercialization</h3>
                 <p className="text-neutral-300 text-sm font-geist">Bridging cutting-edge research with commercial solutions</p>
               </div>
             </div>
@@ -565,10 +582,10 @@ function AboutUs() {
               className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-            
+
             <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500 opacity-100">
               <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
-                <h3 className="text-white text-2xl mb-2 font-geist">SUSTAINABILITY</h3>
+                <h3 className="text-white text-2xl mb-2 font-geist">Sustainability</h3>
                 <p className="text-neutral-300 text-sm font-geist">Creating materials that are stronger, lighter, and greener</p>
               </div>
             </div>
@@ -584,10 +601,10 @@ function AboutUs() {
               className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-            
+
             <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500 opacity-100">
               <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
-                <h3 className="text-white text-2xl mb-2 font-geist">INNOVATION</h3>
+                <h3 className="text-white text-2xl mb-2 font-geist">Innovation</h3>
                 <p className="text-neutral-300 text-sm font-geist">Unlocking graphene's full potential across industries</p>
               </div>
             </div>
@@ -606,7 +623,7 @@ function SectorsSection() {
         {/* Section Heading (Matches existing style) */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div>
-            <h2 className="text-5xl text-slate-200 mb-4">OUR <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">SECTORS</span></h2>
+            <h2 className="text-5xl text-slate-200 mb-4">Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Sectors</span></h2>
             <p className="text-slate-500 max-w-xl">Powering the next generation of hardware with advanced analytics.</p>
           </div>
           <button className="text-brand-blue font-medium hover:text-brand-purple transition-colors flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm">
@@ -616,25 +633,25 @@ function SectorsSection() {
 
         {/* New Grid Layout */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 lg:grid-cols-12 gap-3 sm:gap-4 md:gap-5 lg:gap-6 max-w-full mx-auto">
-          
+
           {/* Hero Card: Analytics Hub */}
           <section className="relative group overflow-hidden rounded-2xl sm:rounded-2xl ring-neutral-800 ring-1 bg-zinc-950 col-span-1 sm:col-span-2 md:col-span-6 lg:col-span-8 min-h-[320px] sm:min-h-[360px] md:min-h-[460px]">
-            <img 
-              src="https://newsroom.arm.com/wp-content/uploads/2023/08/GettyImages-1470664961-1400x788.jpg" 
-              alt="Data visualization dashboard interface" 
-              className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" 
+            <img
+              src="https://newsroom.arm.com/wp-content/uploads/2023/08/GettyImages-1470664961-1400x788.jpg"
+              alt="Data visualization dashboard interface"
+              className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             <div className="relative p-6 sm:p-8 flex flex-col h-full">
               <div className="flex items-center justify-between">
                 <div className="text-xs sm:text-sm text-zinc-300 font-medium">
-                  
-                    
+
+
                 </div>
                 <div className="flex items-center justify-between text-white/90 font-medium">
-                
-                <span className="text-sm">1/8</span>
-              </div>
+
+                  <span className="text-sm">1/8</span>
+                </div>
               </div>
               <div className="mt-auto">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl tracking-tight text-white mb-3">
@@ -683,19 +700,19 @@ function SectorsSection() {
 
           {/* Tile 1: Report Builder */}
           <section className="relative group overflow-hidden rounded-2xl sm:rounded-2xl ring-neutral-800 ring-1 bg-zinc-950 col-span-1 md:col-span-3 lg:col-span-4 min-h-[240px]">
-            <img 
-              src="https://global.videojet.com/wp-content/uploads/dam/image/industry-solution/aero-and-auto/aero-auto-homepage-high-res.bmp" 
-              alt="Business dashboard" 
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" 
+            <img
+              src="https://global.videojet.com/wp-content/uploads/dam/image/industry-solution/aero-and-auto/aero-auto-homepage-high-res.bmp"
+              alt="Business dashboard"
+              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
             <div className="relative p-6 h-full flex flex-col">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg text-white tracking-tight">Automobiles and Aerospace</h3>
                 <div className="flex items-center justify-between text-white/90 font-medium">
-                
-                <span className="text-sm">3/8</span>
-              </div>
+
+                  <span className="text-sm">3/8</span>
+                </div>
               </div>
               <div className="mt-auto">
                 <button className="inline-flex items-center justify-center size-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-colors">
@@ -707,19 +724,19 @@ function SectorsSection() {
 
           {/* Tile 2: Data Pipeline */}
           <section className="relative group overflow-hidden rounded-2xl sm:rounded-2xl ring-neutral-800 ring-1 bg-zinc-950 col-span-1 md:col-span-3 lg:col-span-4 min-h-[240px]">
-            <img 
-              src="https://www.ispionline.it/wp-content/uploads/2025/01/52687051605_989db99360_o-scaled.jpg" 
-              alt="Data center" 
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" 
+            <img
+              src="https://www.ispionline.it/wp-content/uploads/2025/01/52687051605_989db99360_o-scaled.jpg"
+              alt="Data center"
+              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
             <div className="relative p-6 h-full flex flex-col">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg text-white tracking-tight">Defence and Security</h3>
                 <div className="flex items-center justify-between text-white/90 font-medium">
-            
-                <span className="text-sm">4/8</span>
-              </div>
+
+                  <span className="text-sm">4/8</span>
+                </div>
               </div>
               <div className="mt-auto">
                 <button className="inline-flex items-center justify-center size-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-colors">
@@ -731,22 +748,22 @@ function SectorsSection() {
 
           {/* Tile 3: ML Insights */}
           <section className="relative group overflow-hidden rounded-2xl sm:rounded-2xl ring-neutral-800 ring-1 bg-zinc-950 col-span-1 sm:col-span-2 md:col-span-6 lg:col-span-4 min-h-[240px]">
-            <img 
-              src="https://cicconstruction.com/app/uploads/2023/06/building-for-progress-why-infrastructure-development-is-worth-the-trouble-jpg.webp" 
-              alt="Machine learning" 
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" 
+            <img
+              src="https://cicconstruction.com/app/uploads/2023/06/building-for-progress-why-infrastructure-development-is-worth-the-trouble-jpg.webp"
+              alt="Machine learning"
+              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
             <div className="relative p-6 h-full flex flex-col">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg text-white tracking-tight">Construction & Infrastructure</h3>
                 <div className="flex items-center justify-between text-white/90 font-medium">
-               
-                <span className="text-sm">5/8</span>
-              </div>
+
+                  <span className="text-sm">5/8</span>
+                </div>
               </div>
               <div className="mt-auto flex items-center justify-between">
-                
+
                 <button className="inline-flex items-center justify-center size-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-colors">
                   <ArrowRight className="w-5 h-5" />
                 </button>
@@ -780,26 +797,26 @@ const CTASection = () => {
             <span className="text-xs text-black/70">Let's Connect</span>
           </div>
 
-          <h2 className="relative text-3xl uppercase md:text-5xl text-black mb-6 tracking-tight">
-            LET'S GROW <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">TOGETHER.</span>
+          <h2 className="relative text-3xl md:text-5xl text-black mb-6 tracking-tight">
+            Let's Grow <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Together.</span>
           </h2>
-          
+
           <p className="relative text-base md:text-lg text-zinc-400 max-w-2xl mx-auto mb-8 font-light">
             Whether you have a detailed brief or just an idea, I'd love to hear
             from you. Let's create something extraordinary together.
           </p>
 
-          
+
 
           {/* Social Links */}
           <div className="relative flex flex-wrap items-center justify-center gap-8 text-sm text-zinc-500 border-t border-black/10 pt-10">
-            <a href="#" className="flex items-center gap-2 hover:text-black transition-colors">
+            <a href="https://www.linkedin.com/company/weber-innovations/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-black transition-colors">
               <Linkedin className="w-4 h-4" /> LinkedIn
             </a>
-            <a href="#" className="flex items-center gap-2 hover:text-black transition-colors">
+            <a href="https://www.instagram.com/weberinnovations_official/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-black transition-colors">
               <Instagram className="w-4 h-4" /> Instagram
             </a>
-        
+
           </div>
         </motion.div>
       </div>
@@ -837,7 +854,7 @@ const TrustedPartnersAndIntegrations = () => {
           {/* Header */}
           <div className="text-center mb-16 md:mb-32">
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-slate-900 mb-4 md:mb-6">
-              WHAT MAKES <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">GRAPHENE</span> SPECIAL
+              What Makes <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Graphene</span> Special?
             </h2>
             <p className="text-slate-600 text-base md:text-lg max-w-xl mx-auto font-light">
               Connect with your favorite tools to streamline workflows
@@ -846,7 +863,7 @@ const TrustedPartnersAndIntegrations = () => {
 
           {/* Integration Grid Hub */}
           <div className="relative max-w-5xl mx-auto">
-            
+
             {/* Axis Lines - Hidden on Mobile */}
             <div className="hidden md:block absolute top-1/2 left-[-50%] right-[-50%] h-[1px] bg-gradient-to-r from-transparent via-slate-300 to-transparent -translate-y-1/2"></div>
             <div className="hidden md:block absolute left-1/2 top-[-50%] bottom-[-50%] w-[1px] bg-gradient-to-b from-transparent via-slate-300 to-transparent -translate-x-1/2"></div>
@@ -887,14 +904,14 @@ const TrustedPartnersAndIntegrations = () => {
             {/* The Grid of Features */}
             {/* Mobile: 1 col, smaller gap. Desktop: 2 cols, large gap around center hub */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-32 md:gap-y-32">
-              
+
               {/* Item 1 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-16 h-16 rounded-2xl bg-white border border-slate-200 flex items-center justify-center mb-6 group-hover:border-blue-500/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-300">
                   <Shield className="w-7 h-7 text-black group-hover:text-black transition-colors" strokeWidth={1.75} />
                 </div>
                 <h3 className="text-black text-xl mb-2 font-geist">
-                  STRENGTH
+                  Strength
                 </h3>
                 <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed">
                   200x stronger than steel, lightweight, revolutionary designs.
@@ -907,7 +924,7 @@ const TrustedPartnersAndIntegrations = () => {
                   <Zap className="w-7 h-7 text-black group-hover:text-black transition-colors" strokeWidth={1.75} />
                 </div>
                 <h3 className="text-black text-xl mb-2 font-geist">
-                  CONDUCTIVITY
+                  Conductivity
                 </h3>
                 <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed">
                   Superior electrical properties, thermal transfer, electronics innovation.
@@ -920,7 +937,7 @@ const TrustedPartnersAndIntegrations = () => {
                   <Leaf className="w-7 h-7 text-black group-hover:text-black transition-colors" strokeWidth={1.75} />
                 </div>
                 <h3 className="text-black text-xl mb-2 font-geist ">
-                  SUSTAINABILITY
+                  Sustainability
                 </h3>
                 <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed">
                   Abundant and scalable with low-impact manufacturing.
@@ -933,7 +950,7 @@ const TrustedPartnersAndIntegrations = () => {
                   <Maximize2 className="w-7 h-7 text-black group-hover:text-black transition-colors" strokeWidth={1.75} />
                 </div>
                 <h3 className="text-black text-xl mb-2 font-geist">
-                  FLEXIBILITY
+                  Flexibility
                 </h3>
                 <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed">
                   Ultra-thin and bendable enabling flexible electronics and next-gen forms.

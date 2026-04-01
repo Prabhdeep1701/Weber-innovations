@@ -245,8 +245,13 @@ export default function App() {
             transition={{ delay: 0.3 }}
             className="flex flex-wrap gap-4"
           >
-            <ShinyButton>Learn More</ShinyButton>
-            <button className="px-8 py-4 rounded-full border border-slate-200 hover:bg-white hover:shadow-lg transition-all flex items-center gap-2 text-slate-700 font-medium bg-white/40 backdrop-blur-md">
+            <ShinyButton onClick={() => document.getElementById('about-us')?.scrollIntoView({ behavior: 'smooth' })}>
+              Learn More
+            </ShinyButton>
+            <button 
+              onClick={() => navigate('/about')}
+              className="px-8 py-4 rounded-full border border-slate-200 hover:bg-white hover:shadow-lg transition-all flex items-center gap-2 text-slate-700 font-medium bg-white/40 backdrop-blur-md"
+            >
               Our Vision <ArrowRight className="w-4 h-4" />
             </button>
           </motion.div>
@@ -429,7 +434,7 @@ function AboutUs() {
   ];
 
   return (
-    <section className="pt-24 pb-24 bg-black/90 backdrop-blur-xl border-t border-slate-200 relative z-10">
+    <section id="about-us" className="pt-24 pb-24 bg-black/90 backdrop-blur-xl border-t border-slate-200 relative z-10">
       <div className="max-w-7xl w-full mx-auto px-6">
         <div className="text-center md:text-left mb-12">
           <h2 className="text-4xl sm:text-5xl md:text-6xl text-slate-200 mb-4 tracking-tight">

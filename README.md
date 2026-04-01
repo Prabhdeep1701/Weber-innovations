@@ -1,16 +1,74 @@
-# React + Vite
+# Weber Innovations 🧪
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Vercel Deployment](https://img.shields.io/badge/Deploy-Vercel-black?logo=vercel)](https://vercel.com)
+[![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
+[![Vite](https://img.shields.io/badge/Vite-7.0-646CFF?logo=vite)](https://vitejs.dev)
 
-Currently, two official plugins are available:
+**Weber Innovations** is a premium industrial-manufacturing hub specializing in the synthesis of industrial-grade graphene with atomic precision. We bridge the gap between lab-scale potential and industrial scalability, proudly engineered and manufactured in India.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Key Features
 
-## React Compiler
+- **Industrial Scalability**: Bridging lab-scale potential to global industrial needs.
+- **Cost Efficiency**: Achieving high-purity graphene at sub-₹7,000/kg pricing.
+- **High Purity**: Strategic R&D ties ensure top 1% material quality.
+- **Indigenous Manufacturing**: A proud "Make in India" initiative based in Greater Noida.
+- **Premium UI/UX**: Built with Framer Motion, Tailwind CSS, and a specialized glassmorphic design system.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend**: [React 19](https://react.dev/), [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/), [Vanilla CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Deployment**: Optimized for [Vercel](https://vercel.com/) (SPA-ready)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🏗️ Architecture
+
+The project follows a modern component-based architecture:
+- `src/components/`: Reusable UI elements (Modals, Buttons, Cards).
+- `src/data/`: Centralized sector and product data.
+- `src/pages/`: Main application views (Home, Sectors, Insights, Contact).
+- `vercel.json`: Custom configuration for SPA routing and Vercel optimization.
+
+## 📦 Getting Started
+
+### Prerequisites
+- Node.js (v18.x or later)
+- npm or yarn
+
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Prabhdeep1701/Weber-innovations.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd Weber-innovations
+   ```
+3. Install dependencies:
+   ```bash
+   npm install
+   ```
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+### Production Build
+To create a production-optimized build:
+```bash
+npm run build
+```
+The output will be in the `dist/` directory.
+
+## 🌐 Deployment
+
+This project is configured for **Auto-Deployment** via Vercel. 
+- Connected to the `main` branch.
+- Automatic previews for Pull Requests.
+- SPA routing fallback handled via `vercel.json`.
+
+---
+
+© 2024 Weber Innovations. All rights reserved. ISO 9001:2015 Certified.

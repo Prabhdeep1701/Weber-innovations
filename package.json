@@ -1,7 +1,10 @@
 {
-  "name": "aura-financial",
+  "name": "weber-innovations",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "description": "Premium industrial-grade graphene production and advanced manufacturing hub.",
+  "author": "Weber Innovations",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",

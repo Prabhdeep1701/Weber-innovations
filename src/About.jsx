@@ -20,7 +20,7 @@ const VideoBackground = () => {
         className="absolute w-full h-full object-cover"
         // Using a reliable CDN placeholder. 
         // IMPORTANT: Replace this with your local file path if needed (e.g., /assets/video.mp4)
-        src="./assets/black.mp4"
+        src="/assets/black.mp4"
       />
       {/* Light Overlay to keep text readable */}
       <div className="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
@@ -117,7 +117,12 @@ export default function About() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Add this at top of component
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.title = "About Us | Weber Innovations";
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     // IMPORTANT: bg-transparent allows the fixed video to show through
@@ -141,31 +146,11 @@ export default function About() {
           />
         </div>
 
-        {/* <div className="hidden md:flex gap-12 text-m font-medium text-slate-600">
-          {['HOME', 'ABOUT', 'SECTORS', 'INSIGHTS'].map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-black transition-colors">{item}</a>
-          ))}
-        </div> */}
         <div className="hidden md:flex gap-12 text-sm font-medium text-slate-600">
-          {/* Link to Home Page */}
-          <Link to="/" className="hover:text-black transition-colors">
-            Home
-          </Link>
-
-          {/* Scroll to About Section on Home Page */}
-          <a href="/about" className="hover:text-black transition-colors">
-            About
-          </a>
-
-          {/* Link to New Sectors Page */}
-          <Link to="/sectors" className="hover:text-black transition-colors">
-            Sectors
-          </Link>
-
-          {/* Scroll to Insights/Integration Section */}
-          <a href="/insight" className="hover:text-black transition-colors">
-            Insights
-          </a>
+          <Link to="/" className="hover:text-black transition-colors">HOME</Link>
+          <Link to="/about" className="hover:text-black transition-colors">ABOUT</Link>
+          <Link to="/sectors" className="hover:text-black transition-colors">SECTORS</Link>
+          <Link to="/insight" className="hover:text-black transition-colors">INSIGHTS</Link>
         </div>
         {/*<ShinyButton onClick={() => navigate('/contact')} className="flex items-center rounded-full bg-slate-900 text-white text-sm font-bold transition-colors shadow-md">
           CONTACT <ArrowRight className="w-3 h-3" />
@@ -252,7 +237,7 @@ export default function About() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
-          <p>© 2024 Weber Innovations. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Weber Innovations. All rights reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <span>ISO 9001:2015</span>
             <span>Privacy Policy</span>
@@ -298,9 +283,9 @@ const MobileMenu = ({ isOpen, onClose }) => {
               { id: "04", label: "Insights", href: "/insight" },
               { id: "05", label: "Contact", href: "/contact" }
             ].map((link) => (
-              <a
+              <Link
                 key={link.id}
-                href={link.href}
+                to={link.href}
                 onClick={onClose}
                 className="group flex items-baseline gap-4 py-3 border-b border-white/5 hover:border-brand-blue/50 transition-colors"
               >
@@ -310,7 +295,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                 <span className="text-4xl font-light tracking-tighter text-zinc-300 group-hover:text-white transition-colors">
                   {link.label}
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </nav>
@@ -437,7 +422,7 @@ const VisionSection = () => {
                       </defs>
                       <text fontSize="8.5" fill="#fff" fontFamily="monospace" letterSpacing="3" fontWeight="bold">
                         <textPath xlinkHref="#circle">
-                          Weber Innovations • Future Materials •
+                          Weber Innovations • Graphene •
                         </textPath>
                       </text>
                     </svg>

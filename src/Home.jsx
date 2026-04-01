@@ -4,9 +4,11 @@ import {
   ArrowRight, ShieldCheck, Zap, Globe, Activity,
   Mail, BarChart3, Phone, MapPin,
   Rocket, Users, Menu, X, Shield, Maximize2, Leaf,
-  Calendar, Linkedin, Instagram, Twitter, Dribbble
+  Linkedin, Instagram
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import SectorModal from './components/SectorModal';
+import { sectorsData } from './data/sectorsData';
 
 // --- Video Background Component ---
 const VideoBackground = () => {
@@ -18,18 +20,14 @@ const VideoBackground = () => {
         muted
         playsInline
         className="absolute w-full h-full object-cover"
-        // Using a reliable CDN placeholder. 
-        // IMPORTANT: Replace this with your local file path if needed (e.g., /assets/video.mp4)
-        src="./assets/black.mp4"
+        src="/assets/black.mp4"
       />
-      {/* Light Overlay to keep text readable */}
       <div className="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
     </div>
   );
 };
 
 // --- UI Components ---
-
 const ShinyButton = ({ children, className = "", ...props }) => {
   return (
     <motion.button
@@ -91,170 +89,123 @@ const SpotlightCard = ({ children, className = "", delay = 0 }) => {
   );
 };
 
+// --- NEW HERO VISUAL (Floating Cards) ---
+const HeroFloatingCards = () => {
+  return (
+    <div className="flex flex-col items-center justify-center h-full mt-8 lg:mt-0 relative perspective-1000 w-full">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] bg-black opacity-30 blur-[100px] rounded-full pointer-events-none"></div>
+      <div className="relative space-y-4 sm:space-y-5 w-full max-w-[320px] sm:max-w-sm">
+        <motion.div
+          animate={{ y: [-5, 5, -5] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg bg-white/80 backdrop-blur-md border border-white/40"
+        >
+          <div className="w-10 h-10 rounded-full flex items-center justify-center border shrink-0 bg-blue-50 text-brand-blue border-blue-100">
+            <Rocket width="20" strokeWidth="1.5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex justify-between items-center mb-0.5">
+              <p className="text-xs font-semibold text-slate-900">Supply Chain</p>
+              <span className="text-[10px] text-slate-400">Secure</span>
+            </div>
+            <p className="text-xs text-slate-500 truncate">Domestic + Scalable</p>
+          </div>
+          <span className="text-[10px] px-2 py-0.5 rounded border font-medium bg-slate-100 text-slate-600 border-slate-200">
+            Verified
+          </span>
+        </motion.div>
 
-// --- Main App ---
+        <motion.div
+          animate={{ y: [5, -5, 5] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+          className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:ml-8 bg-white/80 backdrop-blur-md border border-white/40"
+        >
+          <div className="flex shrink-0 bg-brand-blue w-10 h-10 border rounded-full items-center justify-center text-white border-blue-600">
+            <Users width="20" strokeWidth="1.5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex justify-between items-center mb-0.5">
+              <p className="text-xs font-semibold text-slate-900">R&D Partners</p>
+              <span className="text-[10px] text-slate-400">Active</span>
+            </div>
+            <p className="text-xs text-slate-500 truncate">Strategic Defence Ties</p>
+          </div>
+          <span className="bg-blue-100 text-[10px] px-2 py-0.5 rounded border border-blue-200 font-medium text-blue-800">
+            3 Active
+          </span>
+        </motion.div>
+
+        <motion.div
+          animate={{ y: [-5, 5, -5] }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:-ml-4 bg-white/80 backdrop-blur-md border border-white/40"
+        >
+          <div className="w-10 h-10 rounded-full text-white flex items-center justify-center border shrink-0 bg-slate-900 border-slate-800">
+            <BarChart3 width="20" strokeWidth="1.5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex justify-between items-center mb-0.5">
+              <p className="text-xs font-semibold text-slate-900">Cost Efficiency</p>
+              <span className="text-[10px] text-slate-400">Audit</span>
+            </div>
+            <p className="text-xs text-slate-500 truncate">&lt; ₹7,000/kg Pricing</p>
+          </div>
+          <span className="text-[10px] px-2 py-0.5 rounded border font-medium bg-slate-900 text-white border-slate-700">
+            Top 1%
+          </span>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
 
 export default function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Add this at top of component
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedSector, setSelectedSector] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // --- NEW HERO VISUAL (Floating Cards) ---
-  const HeroFloatingCards = () => {
-    return (
-      <div className="flex flex-col items-center justify-center h-full mt-8 lg:mt-0 relative perspective-1000 w-full">
+  useEffect(() => {
+    document.title = "Weber Innovations | Industrial Graphene Production";
+    window.scrollTo(0, 0);
+  }, []);
 
-        {/* Background Glow Blob */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] sm:w-[300px] h-[250px] sm:h-[300px] bg-black opacity-30 blur-[100px] rounded-full pointer-events-none"></div>
-
-        {/* Container with max-width to prevent overflow */}
-        <div className="relative space-y-4 sm:space-y-5 w-full max-w-[320px] sm:max-w-sm">
-
-          {/* Card 1 */}
-          <motion.div
-            initial={false}
-            animate={{ y: [-5, 5, -5] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg bg-white/80 backdrop-blur-md border border-white/40"
-          >
-            <div className="w-10 h-10 rounded-full flex items-center justify-center border shrink-0 bg-blue-50 text-brand-blue border-blue-100">
-              <Rocket width="20" strokeWidth="1.5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-center mb-0.5">
-                <p className="text-xs font-semibold text-slate-900">Supply Chain</p>
-                <span className="text-[10px] text-slate-400">Secure</span>
-              </div>
-              <p className="text-xs text-slate-500 truncate">Domestic + Scalable</p>
-            </div>
-            <span className="text-[10px] px-2 py-0.5 rounded border font-medium bg-slate-100 text-slate-600 border-slate-200">
-              Verified
-            </span>
-          </motion.div>
-
-          {/* Card 2 */}
-          <motion.div
-            initial={false}
-            animate={{ y: [5, -5, 5] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:ml-8 bg-white/80 backdrop-blur-md border border-white/40"
-          >
-            <div className="flex shrink-0 bg-brand-blue w-10 h-10 border rounded-full items-center justify-center text-white border-blue-600">
-              <Users width="20" strokeWidth="1.5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-center mb-0.5">
-                <p className="text-xs font-semibold text-slate-900">R&D Partners</p>
-                <span className="text-[10px] text-slate-400">Active</span>
-              </div>
-              <p className="text-xs text-slate-500 truncate">Strategic Defence Ties</p>
-            </div>
-            <span className="bg-blue-100 text-[10px] px-2 py-0.5 rounded border border-blue-200 font-medium text-blue-800">
-              3 Active
-            </span>
-          </motion.div>
-
-          {/* Card 3 */}
-          <motion.div
-            initial={false}
-            animate={{ y: [-5, 5, -5] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="p-3 sm:p-4 rounded-xl flex items-center gap-4 shadow-lg lg:-ml-4 bg-white/80 backdrop-blur-md border border-white/40"
-          >
-            <div className="w-10 h-10 rounded-full text-white flex items-center justify-center border shrink-0 bg-slate-900 border-slate-800">
-              <BarChart3 width="20" strokeWidth="1.5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex justify-between items-center mb-0.5">
-                <p className="text-xs font-semibold text-slate-900">Cost Efficiency</p>
-                <span className="text-[10px] text-slate-400">Audit</span>
-              </div>
-              <p className="text-xs text-slate-500 truncate">&lt; ₹7,000/kg Pricing</p>
-            </div>
-            <span className="text-[10px] px-2 py-0.5 rounded border font-medium bg-slate-900 text-white border-slate-700">
-              Top 1%
-            </span>
-          </motion.div>
-
-        </div>
-      </div>
-    );
+  const handleOpenModal = (dataId) => {
+    setSelectedSector(sectorsData[dataId]);
+    setIsModalOpen(true);
   };
 
   return (
-    // IMPORTANT: bg-transparent allows the fixed video to show through
     <div className="min-h-screen overflow-x-hidden font-sans selection:bg-brand-purple selection:text-white text-slate-900 bg-transparent">
-
-      {/* 1. FIXED VIDEO BACKGROUND LAYER */}
       <VideoBackground />
-
       <motion.div className="fixed top-0 left-0 right-0 h-1.5 bg-brand-blue origin-left z-[100]" style={{ scaleX }} />
 
-      {/* Navigation */}
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-50 flex items-center justify-between p-3 pl-6 pr-4 bg-white/70 backdrop-blur-xl border border-white/40 rounded-full shadow-lg shadow-slate-200/50">
-
-        {/* --- LOGO AREA UPDATED --- */}
         <div className="flex items-center gap-2">
-          {/* Replace the text/icon with your image */}
-          <img
-            src="/icon.png"
-            alt="Weber Innovations"
-            className="h-12 w-auto object-contain"
-          />
+          <img src="/icon.png" alt="Weber Innovations" className="h-12 w-auto object-contain" />
         </div>
 
-        {/* <div className="hidden md:flex gap-12 text-m font-medium text-slate-600">
-          {['HOME', 'ABOUT', 'SECTORS', 'INSIGHTS'].map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-black transition-colors">{item}</a>
-          ))}
-        </div> */}
         <div className="hidden md:flex gap-12 text-sm font-medium text-slate-600">
-          {/* Link to Home Page */}
-          <Link to="/" className="hover:text-black transition-colors">
-            Home
-          </Link>
-
-          {/* Scroll to About Section on Home Page */}
-          <a href="/about" className="hover:text-black transition-colors">
-            About
-          </a>
-
-          {/* Link to New Sectors Page */}
-          <Link to="/sectors" className="hover:text-black transition-colors">
-            Sectors
-          </Link>
-
-          {/* Scroll to Insights/Integration Section */}
-          <a href="/insight" className="hover:text-black transition-colors">
-            Insights
-          </a>
+          <Link to="/" className="hover:text-black transition-colors">HOME</Link>
+          <Link to="/about" className="hover:text-black transition-colors">ABOUT</Link>
+          <Link to="/sectors" className="hover:text-black transition-colors">SECTORS</Link>
+          <Link to="/insight" className="hover:text-black transition-colors">INSIGHTS</Link>
         </div>
 
-        {/* Right Side Actions */}
         <div className="flex items-center gap-4">
-          {/* Contact Button (Hidden on very small screens if needed, or keep) */}
           <ShinyButton onClick={() => navigate('/contact')} className="hidden sm:flex items-center rounded-full bg-slate-900 text-white text-sm font-bold transition-colors shadow-md">
             Contact <ArrowRight className="w-3 h-3" />
           </ShinyButton>
-
-          {/* Mobile Menu Toggle (Visible on Mobile) */}
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="md:hidden group flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-black hover:text-white transition-all duration-300"
-          >
+          <button onClick={() => setIsMenuOpen(true)} className="md:hidden group flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-black hover:text-white transition-all duration-300">
             <Menu className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
           </button>
         </div>
       </nav>
-      {/* Render the Mobile Menu Overlay */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      {/* --- SECTION 1: HERO (TRANSPARENT BG) --- */}
-      {/* --- SECTION 1: HERO (TRANSPARENT BG) --- */}
       <main className="relative pt-32 pb-20 lg:pt-35 lg:pb-30 px-6 max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center min-h-screen">
-
-        {/* TEXT COLUMN: Order 1 on Mobile & Desktop (Top/Left) */}
         <div className="flex flex-col items-start order-1 relative z-10 w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -301,7 +252,6 @@ export default function App() {
           </motion.div>
         </div>
 
-        {/* CARDS COLUMN: Order 2 on Mobile (Bottom), Order 2 on Desktop (Right) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -312,7 +262,6 @@ export default function App() {
         </motion.div>
       </main>
 
-      {/* Marquee */}
       <div className="w-full border-y border-slate-200 bg-white/70 backdrop-blur-md overflow-hidden py-10 relative z-10">
         <div className="flex animate-marquee gap-32 min-w-max">
           {[...Array(4)].map((_, i) => (
@@ -327,16 +276,12 @@ export default function App() {
 
       <AboutUs />
 
-      {/* --- SECTION 2: THE PARADOX (FROSTED GLASS BACKGROUND) --- */}
-      <section className="py-32 px-6 relative z-10  bg-white border-t border-slate-200">
+      <section className="py-32 px-6 relative z-10 bg-white border-t border-slate-200">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-5xl mb-6 text-slate-900">The Graphene <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Paradox</span></h2>
             <div className="space-y-6 text-lg text-slate-600 leading-relaxed">
-              <p>
-                Graphene is the strongest, most conductive material ever discovered.
-                Yet, 94% of global demand relies on inconsistent, high-cost imports.
-              </p>
+              <p>Graphene is the strongest, most conductive material ever discovered. Yet, 94% of global demand relies on inconsistent, high-cost imports.</p>
               <div className="p-6 rounded-2xl bg-slate-100 border border-white/50">
                 <h4 className="text-black font-bold text-sm tracking-wide mb-3">Current Market Failures</h4>
                 <ul className="space-y-3">
@@ -380,136 +325,79 @@ export default function App() {
                   </div>
                 </div>
               </div>
-              <div className="mt-8 pt-6 border-t border-slate-200 flex justify-between items-center text-xs text-slate-400 font-mono">
-                <span>DATA SOURCE: 2024 MARKET REPORT</span>
-                <span>CONFIDENCE: 99.8%</span>
-              </div>
             </SpotlightCard>
           </div>
         </div>
       </section>
 
-      <SectorsSection />
-
+      <SectorsSection onOpenModal={handleOpenModal} />
       <TrustedPartnersAndIntegrations />
-
       <CTASection />
 
-      {/* Footer (Solid) */}
       <footer className="bg-white border-t border-slate-200 pt-20 pb-10 px-6 z-20 relative">
         <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12 mb-16">
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              {/* Replace the text/icon with your image */}
-              <img
-                src="/icon.png"
-                alt="Weber Innovations"
-                className="h-20 w-30 object-contain" /* Adjust h-10 to h-8 or h-12 to fit your logo size */
-              />
-            </div>
+            <img src="/icon.png" alt="Weber Innovations" className="h-20 w-auto object-contain mb-6" />
             <p className="text-slate-500 max-w-sm leading-relaxed">
-              Pioneering the synthesis of advanced 2D materials.
-              Proudly engineered and manufactured in India.
+              Pioneering the synthesis of advanced 2D materials. Proudly engineered and manufactured in India.
             </p>
           </div>
           <div>
-            <h4 className=" text-slate-900 mb-4">Products</h4>
+            <h4 className="text-slate-900 mb-4 font-bold">Products</h4>
             <ul className="space-y-3 text-slate-500 text-sm">
-              <li className="hover:text-black cursor-pointer">Graphene Nanoplatelets</li>
-              <li className="hover:text-black cursor-pointer">Reduced Graphene Oxide</li>
-              <li className="hover:text-black cursor-pointer">Functionalized GO</li>
-              <li className="hover:text-black cursor-pointer">Conductive Inks</li>
+              <li>Graphene Nanoplatelets</li>
+              <li>Reduced Graphene Oxide</li>
+              <li>Functionalized GO</li>
+              <li>Conductive Inks</li>
             </ul>
           </div>
           <div>
-            <h4 className=" text-slate-900 mb-4 font-bold">Contacts</h4>
+            <h4 className="text-slate-900 mb-4 font-bold">Contacts</h4>
             <ul className="space-y-3 text-slate-500 text-sm">
-              <li className="flex items-center gap-2 hover:text-black transition-colors">
-                <Mail className="w-4 h-4" />
-                <a href="mailto:weberinnovations.official@gmail.com">weberinnovations.official@gmail.com</a>
-              </li>
-              <li className="flex items-center gap-2 hover:text-black transition-colors">
-                <Phone className="w-4 h-4" />
-                <a href="tel:+919557281101">+91 9557281101</a>
-              </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4" />
-                Greater Noida, UP, India
-              </li>
+              <li className="flex items-center gap-2"><Mail className="w-4 h-4" /> <a href="mailto:weberinnovations.official@gmail.com">weberinnovations.official@gmail.com</a></li>
+              <li className="flex items-center gap-2"><Phone className="w-4 h-4" /> <a href="tel:+919557281101">+91 9557281101</a></li>
+              <li className="flex items-center gap-2"><MapPin className="w-4 h-4" /> Greater Noida, UP, India</li>
             </ul>
-            <div className="flex gap-3 mt-6">
-              <a href="https://www.linkedin.com/company/weber-innovations/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm">
-                <Linkedin className="w-4 h-4" />
-              </a>
-              <a href="https://www.instagram.com/weberinnovations_official/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-black hover:text-white transition-all shadow-sm">
-                <Instagram className="w-4 h-4" />
-              </a>
-            </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
-          <p>© 2024 Weber Innovations. All rights reserved.</p>
-          <div className="flex gap-6 mt-4 md:mt-0">
-            <span>ISO 9001:2015</span>
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-          </div>
+        <div className="max-w-7xl mx-auto border-t border-slate-200 pt-8 text-center text-xs text-slate-400">
+          <p>© {new Date().getFullYear()} Weber Innovations. All rights reserved.</p>
         </div>
       </footer>
+
+      <SectorModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} sector={selectedSector} />
     </div>
   );
 }
 
-
-
 const MobileMenu = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
       className="fixed inset-0 z-[60] bg-black/90 backdrop-blur-xl md:hidden flex flex-col"
     >
-      {/* Header with Close Button */}
-      <div className="flex justify-end p-6 mt-2 mr-2">
-        <button
-          onClick={onClose}
-          className="group flex items-center justify-center w-10 h-10 rounded-md border border-white/10 bg-white/5 text-white hover:bg-brand-blue hover:border-brand-blue hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all duration-300"
-        >
-          <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
-        </button>
+      <div className="flex justify-end p-6">
+        <button onClick={onClose} className="p-2 border border-white/10 rounded-md text-white"><X /></button>
       </div>
-
-      {/* Menu Links */}
-      <div className="flex-1 flex flex-col justify-center w-full max-w-md mx-auto px-6">
+      <div className="flex-1 flex flex-col justify-center px-6">
         <nav className="grid gap-8">
-          <div className="space-y-2">
-            <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-6 pl-1">Navigation</p>
-
-            {[
-              { id: "01", label: "Home", href: "/" },
-              { id: "02", label: "About", href: "/about" },
-              { id: "03", label: "Sectors", href: "/sectors" },
-              { id: "04", label: "Insights", href: "/insight" },
-              { id: "05", label: "Contact", href: "/contact" }
-            ].map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={onClose}
-                className="group flex items-baseline gap-4 py-3 border-b border-white/5 hover:border-brand-blue/50 transition-colors"
-              >
-                <span className="font-mono text-xs text-brand-blue opacity-50 group-hover:opacity-100 transition-opacity">
-                  {link.id}
-                </span>
-                <span className="text-4xl font-light tracking-tighter text-zinc-300 group-hover:text-white transition-colors">
-                  {link.label}
-                </span>
-              </a>
-            ))}
-          </div>
+          {[
+            { label: 'Home', path: '/' },
+            { label: 'About', path: '/about' },
+            { label: 'Sectors', path: '/sectors' },
+            { label: 'Insights', path: '/insight' },
+            { label: 'Contact', path: '/contact' }
+          ].map((item, i) => (
+            <Link 
+              key={item.label} 
+              to={item.path} 
+              className="text-4xl text-zinc-300 hover:text-white" 
+              onClick={onClose}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
       </div>
     </motion.div>
@@ -517,260 +405,163 @@ const MobileMenu = ({ isOpen, onClose }) => {
 };
 
 function AboutUs() {
+  const cards = [
+    {
+      title: 'Research',
+      desc: 'Pioneering graphene research for real-world applications',
+      img: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80'
+    },
+    {
+      title: 'Commercialization',
+      desc: 'Bridging cutting-edge research with commercial solutions',
+      img: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80'
+    },
+    {
+      title: 'Sustainability',
+      desc: 'Creating materials that are stronger, lighter, and greener',
+      img: '/assets/sustainability.jpeg'
+    },
+    {
+      title: 'Innovation',
+      desc: 'Unlocking graphene\'s full potential across industries',
+      img: '/assets/innovation.webp'
+    }
+  ];
+
   return (
     <section className="pt-24 pb-24 bg-black/90 backdrop-blur-xl border-t border-slate-200 relative z-10">
-      <div className="max-w-7xl w-full mx-auto px-6"> {/* Added px-6 for mobile padding */}
+      <div className="max-w-7xl w-full mx-auto px-6">
         <div className="text-center md:text-left mb-12">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl text-slate-200 mb-4 tracking-tight max-w-none">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl text-slate-200 mb-4 tracking-tight">
             About <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Us</span>
           </h2>
           <p className="text-sm sm:text-base animate-[fadeSlideIn_0.8s_ease-out_0.2s_both] text-neutral-300 font-geist max-w-none">
-            Explore millions of high-quality photos curated for creators,
-            designers, and teams who value speed, impact, and freedom
+            Pioneering the synthesis of advanced 2D materials. Proudly engineered and manufactured in India.
           </p>
         </div>
 
-        {/* Expanding Cards Container */}
-        {/* On Mobile: Stacked with gap. On Desktop: Fixed height row for expansion effect */}
-        <div className="flex flex-col md:flex-row gap-6 md:gap-4 h-auto md:h-[500px]" id="expanding-cards">
+        <div className="flex flex-col md:flex-row gap-6 h-auto md:h-[500px]" id="expanding-cards">
+          {cards.map((card, i) => (
+            <article
+              key={i}
+              className="card group w-full md:flex-1 relative overflow-hidden rounded-2xl transition-all duration-500 ease-out bg-neutral-900/60 ring-neutral-800 ring-1 hover:md:flex-[1.5] min-h-[300px] md:min-h-0"
+            >
+              <img
+                src={card.img}
+                alt={card.title}
+                className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
 
-          {/* Card 1: Research */}
-          <article
-            className="card group w-full md:flex-1 relative overflow-hidden rounded-2xl transition-all duration-500 ease-out bg-neutral-900/60 ring-neutral-800 ring-1 hover:md:flex-[1.5] min-h-[300px] md:min-h-0"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&q=80"
-              alt="research"
-              className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-
-            <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500 opacity-100">
-              <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
-                <h3 className="text-white text-2xl mb-2 font-geist">Research</h3>
-                <p className="text-neutral-300 text-sm font-geist">Pioneering graphene research for real-world applications</p>
+              <div className="absolute bottom-0 left-0 right-0 p-6 opacity-100 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500">
+                <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
+                  <h3 className="text-white text-2xl mb-2 font-geist">{card.title}</h3>
+                  <p className="text-neutral-300 text-sm font-geist">{card.desc}</p>
+                </div>
               </div>
-            </div>
-          </article>
-
-          {/* Card 2: Commercialization */}
-          <article
-            className="card group w-full md:flex-1 relative overflow-hidden rounded-2xl transition-all duration-500 ease-out bg-neutral-900/60 ring-neutral-800 ring-1 hover:md:flex-[1.5] min-h-[300px] md:min-h-0"
-          >
-            <img
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80"
-              alt="commercial"
-              className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-
-            <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500 opacity-100">
-              <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
-                <h3 className="text-white text-2xl mb-2 font-geist">Commercialization</h3>
-                <p className="text-neutral-300 text-sm font-geist">Bridging cutting-edge research with commercial solutions</p>
-              </div>
-            </div>
-          </article>
-
-          {/* Card 3: Sustainability */}
-          <article
-            className="card group w-full md:flex-1 relative overflow-hidden rounded-2xl transition-all duration-500 ease-out bg-neutral-900/60 ring-neutral-800 ring-1 hover:md:flex-[1.5] min-h-[300px] md:min-h-0"
-          >
-            <img
-              src="./assets/sustainability.jpeg"
-              alt="sustainability"
-              className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-
-            <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500 opacity-100">
-              <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
-                <h3 className="text-white text-2xl mb-2 font-geist">Sustainability</h3>
-                <p className="text-neutral-300 text-sm font-geist">Creating materials that are stronger, lighter, and greener</p>
-              </div>
-            </div>
-          </article>
-
-          {/* Card 4: Innovation */}
-          <article
-            className="card group w-full md:flex-1 relative overflow-hidden rounded-2xl transition-all duration-500 ease-out bg-neutral-900/60 ring-neutral-800 ring-1 hover:md:flex-[1.5] min-h-[300px] md:min-h-0"
-          >
-            <img
-              src="./assets/innovation.webp"
-              alt="innovation"
-              className="absolute inset-0 w-full h-full object-cover transition duration-500 group-hover:scale-[1.02] opacity-60 group-hover:opacity-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
-
-            <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 md:opacity-0 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:group-hover:pointer-events-auto transition-all duration-500 opacity-100">
-              <div className="rounded-xl bg-neutral-900/80 ring-1 ring-white/10 backdrop-blur p-5">
-                <h3 className="text-white text-2xl mb-2 font-geist">Innovation</h3>
-                <p className="text-neutral-300 text-sm font-geist">Unlocking graphene's full potential across industries</p>
-              </div>
-            </div>
-          </article>
-
+            </article>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function SectorsSection() {
+function SectorsSection({ onOpenModal }) {
+  const sectors = [
+    {
+      id: 'electronics',
+      title: 'Electronics & Semiconductors',
+      desc: 'Revolutionizing the industry with flexible, ultra-thin, and highly conductive components.',
+      img: 'https://newsroom.arm.com/wp-content/uploads/2023/08/GettyImages-1470664961-1400x788.jpg',
+      col: 'md:col-span-6 lg:col-span-8'
+    },
+    {
+      id: 'energy',
+      title: 'Energy & Storage',
+      desc: 'Boosting battery and supercapacitor performance with high-yield graphene additives.',
+      color: '#3b82f6',
+      col: 'md:col-span-6 lg:col-span-4'
+    },
+    {
+      id: 'auto_aero',
+      title: 'Automobiles & Aerospace',
+      desc: 'Extreme lightweighting and thermal management solutions for the future of mobility.',
+      img: 'https://global.videojet.com/wp-content/uploads/dam/image/industry-solution/aero-and-auto/aero-auto-homepage-high-res.bmp',
+      col: 'md:col-span-3 lg:col-span-4'
+    },
+    {
+      id: 'defense',
+      title: 'Defence & Security',
+      desc: 'Strategic materials for superior protection, stealth, and communication in critical environments.',
+      img: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop',
+      col: 'md:col-span-3 lg:col-span-4'
+    },
+    {
+      id: 'construction',
+      title: 'Construction & Infrastructure',
+      desc: 'High-performance Green Concrete admixtures with massive strength and lower CO2 emissions.',
+      img: 'https://cicconstruction.com/app/uploads/2023/06/building-for-progress-why-infrastructure-development-is-worth-the-trouble-jpg.webp',
+      col: 'md:col-span-6 lg:col-span-4'
+    }
+  ];
+
   return (
-    <section id="sectors" className="py-32 px-6 relative z-10 bg-black/90 backdrop-blur-xl border-t border-slate-200">
+    <section id="sectors" className="py-32 px-6 bg-black/95 backdrop-blur-xl border-t border-white/10 relative z-10">
       <div className="max-w-7xl mx-auto">
-        {/* Section Heading (Matches existing style) */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-16">
           <div>
-            <h2 className="text-5xl text-slate-200 mb-4">Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Sectors</span></h2>
-            <p className="text-slate-500 max-w-xl">Powering the next generation of hardware with advanced analytics.</p>
+            <h2 className="text-5xl text-slate-200 mb-4 tracking-tight">
+              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Sectors</span>
+            </h2>
+            <p className="text-slate-500 max-w-xl font-light">
+              Bridging the gap between lab-scale potential and industrial scalability across eight key industries.
+            </p>
           </div>
-          <button className="text-brand-blue font-medium hover:text-brand-purple transition-colors flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm">
-            View All Sectors <ArrowRight size={16} />
-          </button>
+          <Link
+            to="/sectors"
+            className="text-brand-blue font-medium hover:text-brand-purple transition-all flex items-center gap-2 bg-white/5 px-6 py-3 rounded-full border border-white/10 backdrop-blur-md"
+          >
+            Explore All Sectors <ArrowRight size={16} />
+          </Link>
         </div>
 
-        {/* New Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 lg:grid-cols-12 gap-3 sm:gap-4 md:gap-5 lg:gap-6 max-w-full mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6">
+          {sectors.map((s) => (
+            <div
+              key={s.id}
+              onClick={() => onOpenModal(s.id)}
+              className={`relative overflow-hidden rounded-3xl cursor-pointer group ${s.col} min-h-[350px] border border-white/10 shadow-2xl transition-all duration-500 hover:border-brand-blue/50`}
+              style={s.color ? { backgroundColor: s.color } : {}}
+            >
+              {s.img && (
+                <img
+                  src={s.img}
+                  alt={s.title}
+                  className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-110 group-hover:opacity-40 transition-all duration-700"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
 
-          {/* Hero Card: Analytics Hub */}
-          <section className="relative group overflow-hidden rounded-2xl sm:rounded-2xl ring-neutral-800 ring-1 bg-zinc-950 col-span-1 sm:col-span-2 md:col-span-6 lg:col-span-8 min-h-[320px] sm:min-h-[360px] md:min-h-[460px]">
-            <img
-              src="https://newsroom.arm.com/wp-content/uploads/2023/08/GettyImages-1470664961-1400x788.jpg"
-              alt="Data visualization dashboard interface"
-              className="absolute inset-0 w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-            <div className="relative p-6 sm:p-8 flex flex-col h-full">
-              <div className="flex items-center justify-between">
-                <div className="text-xs sm:text-sm text-zinc-300 font-medium">
-
-
+              <div className="relative p-10 h-full flex flex-col justify-end">
+                <div className="mb-4 opacity-0 -translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
+                  <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center text-white border border-white/20">
+                    <ArrowRight className="w-6 h-6 rotate-[-45deg]" />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between text-white/90 font-medium">
 
-                  <span className="text-sm">1/8</span>
-                </div>
-              </div>
-              <div className="mt-auto">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl tracking-tight text-white mb-3">
-                  Electronics and Semiconductors
-                </h1>
-                <p className="text-sm md:text-base text-zinc-300 max-w-xl font-light leading-relaxed">
-                  Real-time data insights with predictive modeling and automated reporting for enterprise-scale operations.
+                <h3 className="text-3xl text-white font-medium mb-3 leading-tight transition-transform duration-500 group-hover:-translate-y-2">
+                  {s.title}
+                </h3>
+
+                <p className="text-zinc-300 text-sm font-light leading-relaxed max-w-sm opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">
+                  {s.desc}
                 </p>
-                <div className="mt-6">
-                  <button className="inline-flex items-center justify-center size-12 rounded-2xl bg-blue-600 text-white shadow-lg shadow-blue-900/30 hover:bg-blue-500 transition-colors">
-                    <ArrowRight className="w-5 h-5" />
-                  </button>
-                </div>
+
+                <div className="mt-6 w-0 group-hover:w-full h-[1px] bg-gradient-to-r from-brand-blue to-transparent transition-all duration-700"></div>
               </div>
             </div>
-          </section>
-
-          {/* Accent Card: Product Lineup */}
-          <aside
-            className="relative overflow-hidden rounded-2xl sm:rounded-2xl border border-blue-900 col-span-1 sm:col-span-2 md:col-span-6 lg:col-span-4 min-h-[320px] sm:min-h-[360px] md:min-h-[460px]"
-            style={{ backgroundColor: '#3b82f6' }}
-          >
-            <div className="absolute inset-0 pointer-events-none opacity-20"
-              style={{ backgroundImage: 'radial-gradient(rgba(255,255,255,0.8) 1px, transparent 1px)', backgroundSize: '20px 20px', backgroundPosition: '10px 10px' }}>
-            </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-blue-900/50 mix-blend-overlay"></div>
-            <div className="relative h-full p-6 sm:p-8 flex flex-col">
-              <div className="flex items-center justify-between text-white/90 font-medium">
-                <span className="text-sm">Business Intelligence</span>
-                <span className="text-sm">2/8</span>
-              </div>
-              <h2 className="mt-8 text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white leading-[1.1]">
-                Energy<br />and<br />Storage
-              </h2>
-              <p className="mt-4 text-sm md:text-base text-white/90 max-w-xs font-medium">
-                Complete suite of analytics tools that transform raw data into actionable business insights.
-              </p>
-              <div className="mt-auto pt-6">
-                <span className="inline-flex items-center gap-2 px-3.5 h-9 rounded-xl bg-white/20 backdrop-blur border border-white/30 text-white text-sm font-medium">
-                  <BarChart3 className="w-4 h-4" />
-                  Advanced Analytics
-                </span>
-              </div>
-            </div>
-          </aside>
-
-          {/* Tile 1: Report Builder */}
-          <section className="relative group overflow-hidden rounded-2xl sm:rounded-2xl ring-neutral-800 ring-1 bg-zinc-950 col-span-1 md:col-span-3 lg:col-span-4 min-h-[240px]">
-            <img
-              src="https://global.videojet.com/wp-content/uploads/dam/image/industry-solution/aero-and-auto/aero-auto-homepage-high-res.bmp"
-              alt="Business dashboard"
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-            <div className="relative p-6 h-full flex flex-col">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg text-white tracking-tight">Automobiles and Aerospace</h3>
-                <div className="flex items-center justify-between text-white/90 font-medium">
-
-                  <span className="text-sm">3/8</span>
-                </div>
-              </div>
-              <div className="mt-auto">
-                <button className="inline-flex items-center justify-center size-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-colors">
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </section>
-
-          {/* Tile 2: Data Pipeline */}
-          <section className="relative group overflow-hidden rounded-2xl sm:rounded-2xl ring-neutral-800 ring-1 bg-zinc-950 col-span-1 md:col-span-3 lg:col-span-4 min-h-[240px]">
-            <img
-              src="https://www.ispionline.it/wp-content/uploads/2025/01/52687051605_989db99360_o-scaled.jpg"
-              alt="Data center"
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-            <div className="relative p-6 h-full flex flex-col">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg text-white tracking-tight">Defence and Security</h3>
-                <div className="flex items-center justify-between text-white/90 font-medium">
-
-                  <span className="text-sm">4/8</span>
-                </div>
-              </div>
-              <div className="mt-auto">
-                <button className="inline-flex items-center justify-center size-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-colors">
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </section>
-
-          {/* Tile 3: ML Insights */}
-          <section className="relative group overflow-hidden rounded-2xl sm:rounded-2xl ring-neutral-800 ring-1 bg-zinc-950 col-span-1 sm:col-span-2 md:col-span-6 lg:col-span-4 min-h-[240px]">
-            <img
-              src="https://cicconstruction.com/app/uploads/2023/06/building-for-progress-why-infrastructure-development-is-worth-the-trouble-jpg.webp"
-              alt="Machine learning"
-              className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-            <div className="relative p-6 h-full flex flex-col">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg text-white tracking-tight">Construction & Infrastructure</h3>
-                <div className="flex items-center justify-between text-white/90 font-medium">
-
-                  <span className="text-sm">5/8</span>
-                </div>
-              </div>
-              <div className="mt-auto flex items-center justify-between">
-
-                <button className="inline-flex items-center justify-center size-10 rounded-xl bg-blue-600 text-white hover:bg-blue-500 transition-colors">
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-          </section>
-
+          ))}
         </div>
       </div>
     </section>
@@ -802,21 +593,17 @@ const CTASection = () => {
           </h2>
 
           <p className="relative text-base md:text-lg text-zinc-400 max-w-2xl mx-auto mb-8 font-light">
-            Whether you have a detailed brief or just an idea, I'd love to hear
+            Whether you have a detailed brief or just an idea, We'd love to hear
             from you. Let's create something extraordinary together.
           </p>
 
-
-
-          {/* Social Links */}
           <div className="relative flex flex-wrap items-center justify-center gap-8 text-sm text-zinc-500 border-t border-black/10 pt-10">
-            <a href="https://www.linkedin.com/company/weber-innovations/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-black transition-colors">
+            <a href="https://www.linkedin.com/company/weber-innovations/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-black transition-colors font-geist">
               <Linkedin className="w-4 h-4" /> LinkedIn
             </a>
-            <a href="https://www.instagram.com/weberinnovations_official/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-black transition-colors">
+            <a href="https://www.instagram.com/weberinnovations_official/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-black transition-colors font-geist">
               <Instagram className="w-4 h-4" /> Instagram
             </a>
-
           </div>
         </motion.div>
       </div>
@@ -824,14 +611,9 @@ const CTASection = () => {
   );
 };
 
-
-
-// --- Trusted Partners & Integrations Component ---
-
 const TrustedPartnersAndIntegrations = () => {
   return (
     <div className="relative z-10">
-      {/* Styles for Animations (Scoped) */}
       <style>{`
         @keyframes centerCirclePulse {
           0% { opacity: 0; transform: scale(0.6); }
@@ -844,34 +626,22 @@ const TrustedPartnersAndIntegrations = () => {
         .center-circle--2 { animation-delay: -1.3s; }
         .center-circle--3 { animation-delay: -2.6s; }
       `}</style>
-
-      {/* --- PART 2: INTEGRATIONS --- */}
       <section className="overflow-hidden bg-white pt-20 pb-20 md:pt-32 md:pb-32 relative border-t border-slate-200" id="integration">
-        {/* Ambient Background */}
         <div className="absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-blue-100/40 blur-[80px] md:blur-[120px] rounded-full pointer-events-none"></div>
-
         <div className="z-10 max-w-7xl mr-auto ml-auto px-6 relative">
-          {/* Header */}
           <div className="text-center mb-16 md:mb-32">
             <h2 className="text-3xl md:text-5xl font-medium tracking-tight text-slate-900 mb-4 md:mb-6">
               What Makes <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-brand-purple italic">Graphene</span> Special?
             </h2>
             <p className="text-slate-600 text-base md:text-lg max-w-xl mx-auto font-light">
-              Connect with your favorite tools to streamline workflows
+              Unlocking extraordinary material properties for future technologies.
             </p>
           </div>
-
-          {/* Integration Grid Hub */}
           <div className="relative max-w-5xl mx-auto">
-
-            {/* Axis Lines - Hidden on Mobile */}
             <div className="hidden md:block absolute top-1/2 left-[-50%] right-[-50%] h-[1px] bg-gradient-to-r from-transparent via-slate-300 to-transparent -translate-y-1/2"></div>
             <div className="hidden md:block absolute left-1/2 top-[-50%] bottom-[-50%] w-[1px] bg-gradient-to-b from-transparent via-slate-300 to-transparent -translate-x-1/2"></div>
-
-            {/* Center Hub Mechanism - Hidden on Mobile */}
             <div className="hidden md:block pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
               <div className="relative w-[260px] h-[260px]">
-                {/* 3 filled concentric circles pulsing */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="center-circle center-circle--3 w-56 h-56 rounded-full bg-blue-500/5"></div>
                 </div>
@@ -881,14 +651,10 @@ const TrustedPartnersAndIntegrations = () => {
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="center-circle w-24 h-24 rounded-full bg-blue-500/20"></div>
                 </div>
-
-                {/* Gradient Rays extending out */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-full h-px bg-gradient-to-r from-transparent via-blue-400/50 to-transparent"></div>
                   <div className="h-full w-px bg-gradient-to-b from-transparent via-blue-400/50 to-transparent absolute"></div>
                 </div>
-
-                {/* Core Icon */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="flex bg-black w-16 h-16 rounded-full ring-white ring-8 relative shadow-[0_0_40px_rgba(37,99,235,0.4)] items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
@@ -900,59 +666,40 @@ const TrustedPartnersAndIntegrations = () => {
                 </div>
               </div>
             </div>
-
-            {/* The Grid of Features */}
-            {/* Mobile: 1 col, smaller gap. Desktop: 2 cols, large gap around center hub */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-x-32 md:gap-y-32">
-
-              {/* Item 1 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-16 h-16 rounded-2xl bg-white border border-slate-200 flex items-center justify-center mb-6 group-hover:border-blue-500/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-300">
                   <Shield className="w-7 h-7 text-black group-hover:text-black transition-colors" strokeWidth={1.75} />
                 </div>
-                <h3 className="text-black text-xl mb-2 font-geist">
-                  Strength
-                </h3>
-                <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed">
+                <h3 className="text-black text-xl mb-2 font-geist">Strength</h3>
+                <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed font-geist">
                   200x stronger than steel, lightweight, revolutionary designs.
                 </p>
               </div>
-
-              {/* Item 2 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-16 h-16 rounded-2xl bg-white border border-slate-200 flex items-center justify-center mb-6 group-hover:border-blue-500/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-300">
                   <Zap className="w-7 h-7 text-black group-hover:text-black transition-colors" strokeWidth={1.75} />
                 </div>
-                <h3 className="text-black text-xl mb-2 font-geist">
-                  Conductivity
-                </h3>
-                <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed">
+                <h3 className="text-black text-xl mb-2 font-geist">Conductivity</h3>
+                <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed font-geist">
                   Superior electrical properties, thermal transfer, electronics innovation.
                 </p>
               </div>
-
-              {/* Item 3 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-16 h-16 rounded-2xl bg-white border border-slate-200 flex items-center justify-center mb-6 group-hover:border-blue-500/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-300">
                   <Leaf className="w-7 h-7 text-black group-hover:text-black transition-colors" strokeWidth={1.75} />
                 </div>
-                <h3 className="text-black text-xl mb-2 font-geist ">
-                  Sustainability
-                </h3>
-                <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed">
+                <h3 className="text-black text-xl mb-2 font-geist">Sustainability</h3>
+                <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed font-geist">
                   Abundant and scalable with low-impact manufacturing.
                 </p>
               </div>
-
-              {/* Item 4 */}
               <div className="flex flex-col items-center text-center group">
                 <div className="w-16 h-16 rounded-2xl bg-white border border-slate-200 flex items-center justify-center mb-6 group-hover:border-blue-500/50 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-300">
                   <Maximize2 className="w-7 h-7 text-black group-hover:text-black transition-colors" strokeWidth={1.75} />
                 </div>
-                <h3 className="text-black text-xl mb-2 font-geist">
-                  Flexibility
-                </h3>
-                <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed">
+                <h3 className="text-black text-xl mb-2 font-geist">Flexibility</h3>
+                <p className="text-sm text-slate-600 max-w-[280px] leading-relaxed font-geist">
                   Ultra-thin and bendable enabling flexible electronics and next-gen forms.
                 </p>
               </div>

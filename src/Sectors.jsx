@@ -6,6 +6,8 @@ import {
   Target, TrendingUp, Menu, X, Mail, Phone, MapPin, Linkedin, Instagram
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import SectorModal from './components/SectorModal';
+import { sectorsData } from './data/sectorsData';
 
 // --- Video Background Component ---
 const VideoBackground = () => {
@@ -19,7 +21,7 @@ const VideoBackground = () => {
         className="absolute w-full h-full object-cover"
         // Using a reliable CDN placeholder. 
         // IMPORTANT: Replace this with your local file path if needed (e.g., /assets/video.mp4)
-        src="./assets/black.mp4"
+        src="/assets/black.mp4"
       />
       {/* Light Overlay to keep text readable */}
       <div className="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
@@ -116,7 +118,19 @@ export default function SectorsPage() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Add this at top of component
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedSector, setSelectedSector] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    document.title = "Sectors | Weber Innovations";
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleOpenModal = (dataId) => {
+    setSelectedSector(sectorsData[dataId]);
+    setIsModalOpen(true);
+  };
 
   return (
     // IMPORTANT: bg-transparent allows the fixed video to show through
@@ -140,31 +154,11 @@ export default function SectorsPage() {
           />
         </div>
 
-        {/* <div className="hidden md:flex gap-12 text-m font-medium text-slate-600">
-          {['HOME', 'ABOUT', 'SECTORS', 'INSIGHTS'].map(item => (
-            <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-black transition-colors">{item}</a>
-          ))}
-        </div> */}
         <div className="hidden md:flex gap-12 text-sm font-medium text-slate-600">
-          {/* Link to Home Page */}
-          <Link to="/" className="hover:text-black transition-colors">
-            Home
-          </Link>
-
-          {/* Scroll to About Section on Home Page */}
-          <a href="/about" className="hover:text-black transition-colors">
-            About
-          </a>
-
-          {/* Link to New Sectors Page */}
-          <Link to="/sectors" className="hover:text-black transition-colors">
-            Sectors
-          </Link>
-
-          {/* Scroll to Insights/Integration Section */}
-          <a href="/insight" className="hover:text-black transition-colors">
-            Insights
-          </a>
+          <Link to="/" className="hover:text-black transition-colors">HOME</Link>
+          <Link to="/about" className="hover:text-black transition-colors">ABOUT</Link>
+          <Link to="/sectors" className="hover:text-black transition-colors">SECTORS</Link>
+          <Link to="/insight" className="hover:text-black transition-colors">INSIGHTS</Link>
         </div>
         {/* Right Side Actions */}
         <div className="flex items-center gap-4">
@@ -185,7 +179,13 @@ export default function SectorsPage() {
       {/* Render the Mobile Menu Overlay */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
 
-      <SectorsAndStrategy />
+      <SectorsAndStrategy onOpenModal={handleOpenModal} />
+
+      <SectorModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        sector={selectedSector} 
+      />
 
 
       {/* Footer (Solid) */}
@@ -241,7 +241,7 @@ export default function SectorsPage() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
-          <p>© 2024 Weber Innovations. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Weber Innovations. All rights reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <span>ISO 9001:2015</span>
             <span>Privacy Policy</span>
@@ -286,9 +286,9 @@ const MobileMenu = ({ isOpen, onClose }) => {
               { id: "04", label: "Insights", href: "/insight" },
               { id: "05", label: "Contact", href: "/contact" }
             ].map((link) => (
-              <a
+              <Link
                 key={link.id}
-                href={link.href}
+                to={link.href}
                 onClick={onClose}
                 className="group flex items-baseline gap-4 py-3 border-b border-white/5 hover:border-brand-blue/50 transition-colors"
               >
@@ -298,7 +298,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                 <span className="text-4xl font-light tracking-tighter text-zinc-300 group-hover:text-white transition-colors">
                   {link.label}
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </nav>
@@ -308,7 +308,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
 };
 
 
-const SectorsAndStrategy = () => {
+const SectorsAndStrategy = ({ onOpenModal }) => {
   const sectors = [
     {
       id: 1,
@@ -316,7 +316,8 @@ const SectorsAndStrategy = () => {
       points: ["Flexible, ultra-thin components", "Next-gen transistors & screens"],
       icon: <Cpu className="w-6 h-6" />,
       img: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop",
-      color: "from-blue-500/20 to-purple-500/20"
+      color: "from-blue-500/20 to-purple-500/20",
+      dataId: "electronics"
     },
     {
       id: 2,
@@ -324,7 +325,8 @@ const SectorsAndStrategy = () => {
       points: ["Graphene supercapacitors", "Higher density & faster charging"],
       icon: <Zap className="w-6 h-6" />,
       img: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1000&auto=format&fit=crop",
-      color: "from-yellow-500/20 to-orange-500/20"
+      color: "from-yellow-500/20 to-orange-500/20",
+      dataId: "energy"
     },
     {
       id: 3,
@@ -332,7 +334,8 @@ const SectorsAndStrategy = () => {
       points: ["20% lighter composites", "Heat-dissipating coatings"],
       icon: <Plane className="w-6 h-6" />,
       img: "https://images.unsplash.com/photo-1559586616-361e18714958?q=80&w=1000&auto=format&fit=crop",
-      color: "from-sky-500/20 to-indigo-500/20"
+      color: "from-sky-500/20 to-indigo-500/20",
+      dataId: "auto_aero"
     },
     {
       id: 4,
@@ -340,7 +343,8 @@ const SectorsAndStrategy = () => {
       points: ["Enhanced cement", "Greater tensile strength"],
       icon: <Hammer className="w-6 h-6" />,
       img: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1000&auto=format&fit=crop",
-      color: "from-stone-500/20 to-zinc-500/20"
+      color: "from-stone-500/20 to-zinc-500/20",
+      dataId: "construction"
     },
     {
       id: 5,
@@ -348,7 +352,8 @@ const SectorsAndStrategy = () => {
       points: ["Advanced biosensors", "Drug delivery systems"],
       icon: <HeartPulse className="w-6 h-6" />,
       img: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?q=80&w=1000&auto=format&fit=crop",
-      color: "from-red-500/20 to-pink-500/20"
+      color: "from-red-500/20 to-pink-500/20",
+      dataId: "healthcare"
     },
     {
       id: 6,
@@ -356,7 +361,8 @@ const SectorsAndStrategy = () => {
       points: ["Smart temperature fabrics", "Conductive wearables"],
       icon: <Shirt className="w-6 h-6" />,
       img: "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=1000&auto=format&fit=crop",
-      color: "from-violet-500/20 to-fuchsia-500/20"
+      color: "from-violet-500/20 to-fuchsia-500/20",
+      dataId: "textiles"
     },
     {
       id: 7,
@@ -364,17 +370,23 @@ const SectorsAndStrategy = () => {
       points: ["Graphene oxide membranes", "Efficient desalination"],
       icon: <Droplets className="w-6 h-6" />,
       img: "https://images.unsplash.com/photo-1519692933481-e162a57d6721?q=80&w=1000&auto=format&fit=crop",
-      color: "from-cyan-500/20 to-teal-500/20"
+      color: "from-cyan-500/20 to-teal-500/20",
+      dataId: "water"
     },
     {
       id: 8,
       title: "Defense",
       points: ["High-strength armor", "EMI shielding"],
       icon: <Shield className="w-6 h-6" />,
-      img: "https://images.unsplash.com/photo-1596464716127-f9a0859606d6?q=80&w=1000&auto=format&fit=crop",
-      color: "from-emerald-500/20 to-green-500/20"
+      img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1200&auto=format&fit=crop",
+      color: "from-emerald-500/20 to-green-500/20",
+      dataId: "defense"
     }
   ];
+
+  const handleOpenModal = (dataId) => {
+    onOpenModal(dataId);
+  };
 
   return (
     <div className="relative w-full overflow-hidden z-10">
@@ -407,7 +419,8 @@ const SectorsAndStrategy = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group relative h-96 rounded-2xl overflow-hidden border border-white/10 bg-zinc-900"
+                onClick={() => handleOpenModal(sector.dataId)}
+                className="group relative h-96 rounded-2xl overflow-hidden border border-white/10 bg-zinc-900 cursor-pointer"
               >
                 {/* Background Image */}
                 <div className="absolute inset-0">

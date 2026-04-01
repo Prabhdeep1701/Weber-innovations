@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { 
-  ArrowRight,MessageSquare, Mail, Clock, Route, MessageCircle, Menu, X, Phone, MapPin, Linkedin, Instagram
+import {
+  ArrowRight, MessageSquare, Mail, Clock, Route, MessageCircle, Menu, X, Phone, MapPin, Linkedin, Instagram, User
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ const VideoBackground = () => {
         className="absolute w-full h-full object-cover"
         // Using a reliable CDN placeholder. 
         // IMPORTANT: Replace this with your local file path if needed (e.g., /assets/video.mp4)
-        src="./assets/black.mp4" 
+        src="/assets/black.mp4"
       />
       {/* Light Overlay to keep text readable */}
       <div className="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
@@ -29,7 +29,7 @@ const VideoBackground = () => {
 
 const ShinyButton = ({ children, className = "", ...props }) => {
   return (
-    <motion.button 
+    <motion.button
       whileHover={{ scale: 1.02 }}
       {...props}
       whileTap={{ scale: 0.98 }}
@@ -50,13 +50,18 @@ export default function Contact() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const navigate = useNavigate();
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // Add this at top of component
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  
+  useEffect(() => {
+    document.title = "Contact Us | Weber Innovations";
+    window.scrollTo(0, 0);
+  }, []);
+
+
   return (
     // IMPORTANT: bg-transparent allows the fixed video to show through
     <div className="min-h-screen font-sans selection:bg-brand-purple selection:text-white text-slate-900 bg-transparent">
-      
+
       {/* 1. FIXED VIDEO BACKGROUND LAYER */}
       <VideoBackground />
 
@@ -64,13 +69,13 @@ export default function Contact() {
 
       {/* Navigation */}
       <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[90%] max-w-5xl z-50 flex items-center justify-between p-3 pl-6 pr-4 bg-white/70 backdrop-blur-xl border border-white/40 rounded-full shadow-lg shadow-slate-200/50">
-        
+
         {/* --- LOGO AREA UPDATED --- */}
         <div className="flex items-center gap-2">
           {/* Replace the text/icon with your image */}
-          <img 
+          <img
             src="/icon.png"
-            alt="Weber Innovations" 
+            alt="Weber Innovations"
             className="h-12 w-auto object-contain"
           />
         </div>
@@ -81,41 +86,26 @@ export default function Contact() {
           ))}
         </div> */}
         <div className="hidden md:flex gap-12 text-sm font-medium text-slate-600">
-          {/* Link to Home Page */}
-          <Link to="/" className="hover:text-black transition-colors">
-            Home
-          </Link>
-
-          {/* Scroll to About Section on Home Page */}
-          <a href="/about" className="hover:text-black transition-colors">
-            About
-          </a>
-
-          {/* Link to New Sectors Page */}
-          <Link to="/sectors" className="hover:text-black transition-colors">
-            Sectors
-          </Link>
-
-          {/* Scroll to Insights/Integration Section */}
-          <a href="/insight" className="hover:text-black transition-colors">
-            Insights
-          </a>
+          <Link to="/" className="hover:text-black transition-colors">HOME</Link>
+          <Link to="/about" className="hover:text-black transition-colors">ABOUT</Link>
+          <Link to="/sectors" className="hover:text-black transition-colors">SECTORS</Link>
+          <Link to="/insight" className="hover:text-black transition-colors">INSIGHTS</Link>
         </div>
         {/* Right Side Actions */}
-                <div className="flex items-center gap-4">
-                  {/* Contact Button (Hidden on very small screens if needed, or keep) */}
-                  <ShinyButton onClick={() => navigate('/contact')} className="hidden sm:flex items-center rounded-full bg-slate-900 text-white text-sm font-bold transition-colors shadow-md">
-                    Contact <ArrowRight className="w-3 h-3" />
-                  </ShinyButton>
-              
-                  {/* Mobile Menu Toggle (Visible on Mobile) */}
-                  <button 
-                    onClick={() => setIsMenuOpen(true)}
-                    className="md:hidden group flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-black hover:text-white transition-all duration-300"
-                  >
-                    <Menu className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
-                  </button>
-                </div>
+        <div className="flex items-center gap-4">
+          {/* Contact Button (Hidden on very small screens if needed, or keep) */}
+          <ShinyButton onClick={() => navigate('/contact')} className="hidden sm:flex items-center rounded-full bg-slate-900 text-white text-sm font-bold transition-colors shadow-md">
+            Contact <ArrowRight className="w-3 h-3" />
+          </ShinyButton>
+
+          {/* Mobile Menu Toggle (Visible on Mobile) */}
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="md:hidden group flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 bg-white text-slate-600 hover:bg-black hover:text-white transition-all duration-300"
+          >
+            <Menu className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
+          </button>
+        </div>
       </nav>
       {/* Render the Mobile Menu Overlay */}
       <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
@@ -128,14 +118,14 @@ export default function Contact() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center gap-2 mb-6">
               {/* Replace the text/icon with your image */}
-              <img 
+              <img
                 src="/icon.png"
-                alt="Weber Innovations" 
+                alt="Weber Innovations"
                 className="h-20 w-30 object-contain" /* Adjust h-10 to h-8 or h-12 to fit your logo size */
               />
             </div>
             <p className="text-slate-500 max-w-sm leading-relaxed">
-              Pioneering the synthesis of advanced 2D materials. 
+              Pioneering the synthesis of advanced 2D materials.
               Proudly engineered and manufactured in India.
             </p>
           </div>
@@ -175,12 +165,12 @@ export default function Contact() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-slate-400">
-           <p>© 2024 Weber Innovations. All rights reserved.</p>
-           <div className="flex gap-6 mt-4 md:mt-0">
-             <span>ISO 9001:2015</span>
-             <span>Privacy Policy</span>
-             <span>Terms of Service</span>
-           </div>
+          <p>© {new Date().getFullYear()} Weber Innovations. All rights reserved.</p>
+          <div className="flex gap-6 mt-4 md:mt-0">
+            <span>ISO 9001:2015</span>
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+          </div>
         </div>
       </footer>
     </div>
@@ -191,7 +181,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -199,7 +189,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
     >
       {/* Header with Close Button */}
       <div className="flex justify-end p-6 mt-2 mr-2">
-        <button 
+        <button
           onClick={onClose}
           className="group flex items-center justify-center w-10 h-10 rounded-md border border-white/10 bg-white/5 text-white hover:bg-brand-blue hover:border-brand-blue hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all duration-300"
         >
@@ -212,7 +202,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
         <nav className="grid gap-8">
           <div className="space-y-2">
             <p className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 mb-6 pl-1">Navigation</p>
-            
+
             {[
               { id: "01", label: "Home", href: "/" },
               { id: "02", label: "About", href: "/about" },
@@ -220,9 +210,9 @@ const MobileMenu = ({ isOpen, onClose }) => {
               { id: "04", label: "Insights", href: "/insight" },
               { id: "05", label: "Contact", href: "/contact" }
             ].map((link) => (
-              <a 
+              <Link
                 key={link.id}
-                href={link.href} 
+                to={link.href}
                 onClick={onClose}
                 className="group flex items-baseline gap-4 py-3 border-b border-white/5 hover:border-brand-blue/50 transition-colors"
               >
@@ -232,7 +222,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                 <span className="text-4xl font-light tracking-tighter text-zinc-300 group-hover:text-white transition-colors">
                   {link.label}
                 </span>
-              </a>
+              </Link>
             ))}
           </div>
         </nav>
@@ -242,11 +232,29 @@ const MobileMenu = ({ isOpen, onClose }) => {
 };
 
 function ContactSupportSection() {
+  const [formState, setFormState] = useState({ name: '', email: '', message: '' });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleChange = (e) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+    setFormState({ name: '', email: '', message: '' });
+  };
+
   return (
     <section className="py-20 md:py-32 max-w-7xl mx-auto px-4 sm:px-6 relative z-10 mb-10">
       {/* Header */}
       <div className="mb-12 md:mb-20 text-center">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -264,9 +272,9 @@ function ContactSupportSection() {
       <div className="relative overflow-hidden ring-1 ring-white/10 bg-neutral-900 rounded-2xl shadow-2xl">
         {/* Background */}
         <div className="absolute inset-0">
-          <img 
-            src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/60668e31-2150-424e-b292-05bfdda254e0_1600w.jpg" 
-            alt="Abstract minimal background" 
+          <img
+            src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/60668e31-2150-424e-b292-05bfdda254e0_1600w.jpg"
+            alt="Abstract minimal background"
             className="h-full w-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/50 to-transparent"></div>
@@ -275,7 +283,7 @@ function ContactSupportSection() {
         {/* Content */}
         <div className="relative z-10 p-6 sm:p-8 md:p-12">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-            
+
             {/* Copy + Highlights (Order 1 on Mobile, Order 2 on Desktop) */}
             <div className="lg:col-span-7 flex flex-col justify-center h-full order-1 lg:order-2 mb-8 lg:mb-0">
               <h2 className="text-white tracking-tight text-4xl sm:text-5xl md:text-6xl">Let's <span className="text-white italic">Talk.</span></h2>
@@ -304,27 +312,7 @@ function ContactSupportSection() {
                 </div>
               </div>
 
-              {/* Direct contact card */}
-              <div className="mt-10">
-                <div className="inline-flex flex-wrap sm:flex-nowrap items-center gap-3 rounded-2xl bg-white/95 backdrop-blur ring-1 ring-black/10 shadow-lg p-3 pr-4 max-w-full">
-                  <img 
-                    src="https://hoirqrkdgbmvpwutwuwj-all.supabase.co/storage/v1/object/public/assets/assets/09f960eb-611f-430b-86b4-1d5a280d6eb8_800w.jpg" 
-                    alt="Ask CEO" 
-                    className="h-12 w-12 rounded-xl object-cover shrink-0"
-                  />
-                  <div className="min-w-0 mr-2 flex-1">
-                    <p className="text-[11px] text-neutral-500 leading-none uppercase tracking-wider font-semibold">Ask CEO</p>
-                    <p className="text-neutral-900 font-medium tracking-tight truncate">Ava Kim</p>
-                  </div>
-                  <a 
-                    href="mailto:weberinnovations.official@gmail.com"
-                    className="ml-auto sm:ml-2 inline-flex items-center gap-2 rounded-xl bg-neutral-900 text-white px-4 py-2.5 text-xs font-medium hover:bg-neutral-800 transition-colors shrink-0"
-                  >
-                    Ask directly
-                    <Mail className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-              </div>
+
             </div>
 
             {/* Form card (Order 2 on Mobile, Order 1 on Desktop) */}
@@ -342,55 +330,82 @@ function ContactSupportSection() {
                   </div>
                 </div>
 
-                <form action="#" method="POST" className="mt-6 space-y-4">
-                  <div>
-                    <label htmlFor="ct-name" className="block text-xs font-medium text-neutral-600">
-                      Your name<span className="text-red-500"> *</span>
-                    </label>
-                    <input 
-                      id="ct-name" 
-                      name="name" 
-                      type="text" 
-                      required 
-                      placeholder="Jane Doe" 
-                      className="mt-1 w-full pl-3 pr-3 py-3 text-sm rounded-xl ring-1 ring-black/10 focus:ring-2 focus:ring-neutral-900 outline-none bg-white placeholder:text-neutral-400 transition-all"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="ct-email" className="block text-xs font-medium text-neutral-600">
-                      E‑mail<span className="text-red-500"> *</span>
-                    </label>
-                    <div className="relative mt-1">
-                      <Mail className="h-4 w-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                      <input 
-                        id="ct-email" 
-                        name="email" 
-                        type="email" 
-                        required 
-                        placeholder="you@solace.com" 
-                        className="w-full pl-9 pr-3 py-3 text-sm rounded-xl ring-1 ring-black/10 focus:ring-2 focus:ring-neutral-900 outline-none bg-white placeholder:text-neutral-400 transition-all"
+                {isSubmitted ? (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mt-6 p-8 text-center rounded-2xl bg-brand-blue/5 border border-brand-blue/10"
+                  >
+                    <div className="w-16 h-16 bg-brand-blue text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                      <MessageCircle className="w-8 h-8" />
+                    </div>
+                    <h3 className="text-2xl text-neutral-900 mb-2">Message Sent!</h3>
+                    <p className="text-neutral-500 text-sm">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                    <button 
+                      onClick={() => setIsSubmitted(false)}
+                      className="mt-6 text-sm font-medium text-brand-blue hover:underline"
+                    >
+                      Send another message
+                    </button>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                    <div>
+                      <label htmlFor="ct-name" className="block text-xs font-medium text-neutral-600">
+                        Your name<span className="text-red-500"> *</span>
+                      </label>
+                      <input
+                        id="ct-name"
+                        name="name"
+                        type="text"
+                        required
+                        value={formState.name}
+                        onChange={handleChange}
+                        placeholder="Jane Doe"
+                        className="mt-1 w-full pl-3 pr-3 py-3 text-sm rounded-xl ring-1 ring-black/10 focus:ring-2 focus:ring-neutral-900 outline-none bg-white placeholder:text-neutral-400 transition-all"
                       />
                     </div>
-                  </div>
-                  <div>
-                    <label htmlFor="ct-msg" className="block text-xs font-medium text-neutral-600">Message</label>
-                    <textarea 
-                      id="ct-msg" 
-                      name="message" 
-                      rows="4" 
-                      placeholder="How can we help?" 
-                      className="mt-1 w-full resize-y pl-3 pr-3 py-3 text-sm rounded-xl ring-1 ring-black/10 focus:ring-2 focus:ring-neutral-900 outline-none bg-white placeholder:text-neutral-400 transition-all"
-                    ></textarea>
-                  </div>
-                  <button 
-                    type="submit" 
-                    className="w-full inline-flex items-center justify-center rounded-xl bg-neutral-900 text-white px-4 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
-                  >
-                    Send message
-                    <ArrowRight className="h-4 w-4 ml-2" />
-                  </button>
-                  <p className="text-[11px] text-neutral-500 text-center mt-2">By submitting, you agree to our Terms and Privacy Policy.</p>
-                </form>
+                    <div>
+                      <label htmlFor="ct-email" className="block text-xs font-medium text-neutral-600">
+                        E‑mail<span className="text-red-500"> *</span>
+                      </label>
+                      <div className="relative mt-1">
+                        <Mail className="h-4 w-4 text-neutral-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                        <input
+                          id="ct-email"
+                          name="email"
+                          type="email"
+                          required
+                          value={formState.email}
+                          onChange={handleChange}
+                          placeholder="you@company.com"
+                          className="w-full pl-9 pr-3 py-3 text-sm rounded-xl ring-1 ring-black/10 focus:ring-2 focus:ring-neutral-900 outline-none bg-white placeholder:text-neutral-400 transition-all"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label htmlFor="ct-msg" className="block text-xs font-medium text-neutral-600">Message</label>
+                      <textarea
+                        id="ct-msg"
+                        name="message"
+                        rows="4"
+                        value={formState.message}
+                        onChange={handleChange}
+                        placeholder="How can we help?"
+                        className="mt-1 w-full resize-y pl-3 pr-3 py-3 text-sm rounded-xl ring-1 ring-black/10 focus:ring-2 focus:ring-neutral-900 outline-none bg-white placeholder:text-neutral-400 transition-all"
+                      ></textarea>
+                    </div>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className={`w-full inline-flex items-center justify-center rounded-xl bg-neutral-900 text-white px-4 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                    >
+                      {isSubmitting ? 'Sending...' : 'Send message'}
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </button>
+                    <p className="text-[11px] text-neutral-500 text-center mt-2">By submitting, you agree to our Terms and Privacy Policy.</p>
+                  </form>
+                )}
               </div>
             </div>
 
